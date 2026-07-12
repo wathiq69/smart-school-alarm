@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val prefs by lazy { PreferencesManager.getInstance(this) }
     private val handler = Handler(Looper.getMainLooper())
 
-    private val permissionsLauncher = registerForActivityResult(ActivityResultResultContracts.RequestMultiplePermissions()) { results ->
+    private val permissionsLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
         if (results.values.all { it }) { startMonitoringService(); speakWelcomeMessage() }
         else { Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show() }
     }
@@ -59,16 +59,16 @@ class MainActivity : AppCompatActivity() {
         binding.btnTestSound.setOnClickListener {
             val intent = Intent(this, ScheduleMonitorService::class.java).apply { action = ScheduleMonitorService.ACTION_SPEAK_WELCOME }
             ContextCompat.startForegroundService(this, intent)
-            Toast.makeText(this, "ط¬ط§ط±ظٹ ط§ط®طھط¨ط§ط± ط§ظ„طµظˆطھ...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "جاري اختبار الصوت...", Toast.LENGTH_SHORT).show()
         }
         binding.btnPauseToday.setOnClickListener {
             prefs.pauseToday = !prefs.pauseToday
-            Toast.makeText(this, if (prefs.pauseToday) "طھظ… ط¥ظٹظ‚ط§ظپ ط§ظ„طھط·ط¨ظٹظ‚ ط§ظ„ظٹظˆظ…" else "طھظ… طھظپط¹ظٹظ„ ط§ظ„طھط·ط¨ظٹظ‚ ط§ظ„ظٹظˆظ…", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, if (prefs.pauseToday) "تم إيقاف التطبيق اليوم" else "تم تفعيل التطبيق اليوم", Toast.LENGTH_SHORT).show()
             updatePauseButton()
         }
     }
 
-    private fun updatePauseButton() { binding.btnPauseToday.text = if (prefs.pauseToday) "طھظپط¹ظٹظ„ ط§ظ„ظٹظˆظ…" else "ط¥ظٹظ‚ط§ظپ ط§ظ„ظٹظˆظ…" }
+    private fun updatePauseButton() { binding.btnPauseToday.text = if (prefs.pauseToday) "تفعيل اليوم" else "إيقاف اليوم" }
 
     private fun checkAndRequestPermissions() {
         val needed = mutableListOf<String>()
@@ -93,9 +93,9 @@ class MainActivity : AppCompatActivity() {
         val cal = Calendar.getInstance()
         val h = cal.get(Calendar.HOUR_OF_DAY); val m = cal.get(Calendar.MINUTE); val s = cal.get(Calendar.SECOND)
         binding.tvClock.text = String.format("%02d:%02d:%02d", h, m, s)
-        val dayNames = arrayOf("ط§ظ„ط£ط­ط¯", "ط§ظ„ط¥ط«ظ†ظٹظ†", "ط§ظ„ط«ظ„ط§ط«ط§ط،", "ط§ظ„ط£ط±ط¨ط¹ط§ط،", "ط§ظ„ط®ظ…ظٹط³", "ط§ظ„ط¬ظ…ط¹ط©", "ط§ظ„ط³ط¨طھ")
-        val monthNames = arrayOf("ظٹظ†ط§ظٹط±", "ظپط¨ط±ط§ظٹط±", "ظ…ط§ط±ط³", "ط£ط¨ط±ظٹظ„", "ظ…ط§ظٹظˆ", "ظٹظˆظ†ظٹظˆ", "ظٹظˆظ„ظٹظˆ", "ط£ط؛ط³ط·ط³", "ط³ط¨طھظ…ط¨ط±", "ط£ظƒطھظˆط¨ط±", "ظ†ظˆظپظ…ط¨ط±", "ط¯ظٹط³ظ…ط¨ط±")
-        binding.tvDate.text = "${dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1]}طŒ ${cal.get(Calendar.DAY_OF_MONTH)} ${monthNames[cal.get(Calendar.MONTH)]} ${cal.get(Calendar.YEAR)}"
+        val dayNames = arrayOf("الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت")
+        val monthNames = arrayOf("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر")
+        binding.tvDate.text = "${dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1]}، ${cal.get(Calendar.DAY_OF_MONTH)} ${monthNames[cal.get(Calendar.MONTH)]} ${cal.get(Calendar.YEAR)}"
     }
 
     private fun updateScheduleStatus() {
@@ -105,34 +105,34 @@ class MainActivity : AppCompatActivity() {
             PeriodType.LESSON -> {
                 val lessonNum = state.lessonNumber ?: 1
                 val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
-                binding.tvStatus.text = "ظپظٹ ط§ظ„ط­طµط© $lessonNum"
+                binding.tvStatus.text = "في الحصة $lessonNum"
                 binding.tvRemaining.text = ScheduleCalculator.formatRemaining(state.remainingSeconds)
-                binding.tvRemainingLabel.text = "ط§ظ„ظˆظ‚طھ ط§ظ„ظ…طھط¨ظ‚ظٹ"
-                binding.tvLessonInfo.text = if (lessonInfo.isNotBlank()) "ط§ظ„ط¯ط±ط³: $lessonInfo" else "ظ„ظ… ظٹط­ط¯ط¯ ط§ظ„ط¯ط±ط³"
+                binding.tvRemainingLabel.text = "الوقت المتبقي"
+                binding.tvLessonInfo.text = if (lessonInfo.isNotBlank()) "الدرس: $lessonInfo" else "لم يحدد الدرس"
                 binding.tvLessonInfo.visibility = View.VISIBLE
             }
             PeriodType.BREAK -> {
-                binding.tvStatus.text = "ظپظٹ ط§ظ„ظپط±طµط©"
+                binding.tvStatus.text = "في الفرصة"
                 binding.tvRemaining.text = ScheduleCalculator.formatRemaining(state.remainingSeconds)
-                binding.tvRemainingLabel.text = "ظ…طھط¨ظ‚ظٹ ط¹ظ„ظ‰ ط¨ط¯ط§ظٹط© ط§ظ„ط­طµط©"
+                binding.tvRemainingLabel.text = "متبقي على بداية الحصة"
                 binding.tvLessonInfo.visibility = View.GONE
             }
             PeriodType.BEFORE_SCHOOL -> {
-                binding.tvStatus.text = "ظ‚ط¨ظ„ ط§ظ„ط¯ظˆط§ظ…"
+                binding.tvStatus.text = "قبل الدوام"
                 binding.tvRemaining.text = ScheduleCalculator.formatTime(state.endMs)
-                binding.tvRemainingLabel.text = "ط¨ط¯ط§ظٹط© ط§ظ„ط¯ظˆط§ظ…"
+                binding.tvRemainingLabel.text = "بداية الدوام"
                 binding.tvLessonInfo.visibility = View.GONE
             }
             PeriodType.AFTER_SCHOOL -> {
-                binding.tvStatus.text = "ط¨ط¹ط¯ ط§ظ„ط¯ظˆط§ظ…"
-                binding.tvRemaining.text = "ط§ظ†طھظ‡ظ‰"
-                binding.tvRemainingLabel.text = "ط§ظ„ط¯ظˆط§ظ…"
+                binding.tvStatus.text = "بعد الدوام"
+                binding.tvRemaining.text = "انتهى"
+                binding.tvRemainingLabel.text = "الدوام"
                 binding.tvLessonInfo.visibility = View.GONE
             }
             PeriodType.DISABLED -> {
-                binding.tvStatus.text = "ظ…ط¹ط·ظ„ ط§ظ„ظٹظˆظ…"
+                binding.tvStatus.text = "معطل اليوم"
                 binding.tvRemaining.text = "--:--"
-                binding.tvRemainingLabel.text = "ط§ظ„طھط·ط¨ظٹظ‚ ظ…طھظˆظ‚ظپ"
+                binding.tvRemainingLabel.text = "التطبيق متوقف"
                 binding.tvLessonInfo.visibility = View.GONE
             }
         }
