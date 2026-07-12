@@ -3,7 +3,6 @@ package com.wathiq.schoolalarm.util
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.Ringtone
-import android.media.RingtoneManager
 import android.net.Uri
 
 class RingtoneManager private constructor(private val context: Context) {
@@ -18,18 +17,18 @@ class RingtoneManager private constructor(private val context: Context) {
     private var ringtone: Ringtone? = null
 
     fun playLessonRingtone() {
-        playSystemRingtone(RingtoneManager.TYPE_ALARM)
+        playSystemRingtone(android.media.RingtoneManager.TYPE_ALARM)
     }
 
     fun playBreakRingtone() {
-        playSystemRingtone(RingtoneManager.TYPE_NOTIFICATION)
+        playSystemRingtone(android.media.RingtoneManager.TYPE_NOTIFICATION)
     }
 
     private fun playSystemRingtone(type: Int) {
         stop()
         try {
-            val uri = RingtoneManager.getDefaultUri(type)
-            ringtone = RingtoneManager.getRingtone(context, uri)
+            val uri = android.media.RingtoneManager.getDefaultUri(type)
+            ringtone = android.media.RingtoneManager.getRingtone(context, uri)
             ringtone?.audioAttributes = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ALARM)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
