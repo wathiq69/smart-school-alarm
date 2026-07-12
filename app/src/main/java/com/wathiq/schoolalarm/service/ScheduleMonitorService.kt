@@ -88,26 +88,26 @@ class ScheduleMonitorService : Service() {
         val lessonNum = state.lessonNumber ?: return
         val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
         ringtoneMgr.playLessonRingtone()
-        val msg = if (lessonInfo.isNotBlank()) "ط¨ط¯ط£طھ ط§ظ„ط­طµط© $lessonNum. ظ„ط¯ظٹظƒ ط¯ط±ط³ $lessonInfo" else "ط¨ط¯ط£طھ ط§ظ„ط­طµط© $lessonNum"
-        speakAndAlert(msg, "ط¨ط¯ط§ظٹط© ط§ظ„ط­طµط© $lessonNum", NotificationManager.IMPORTANCE_HIGH)
+        val msg = if (lessonInfo.isNotBlank()) "بدأت الحصة $lessonNum. لديك درس $lessonInfo" else "بدأت الحصة $lessonNum"
+        speakAndAlert(msg, "بداية الحصة $lessonNum", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onLessonEndAlert(state: ScheduleState) {
         val sec = prefs.lessonEndAlertSec
         ringtoneMgr.playLessonRingtone()
-        speakAndAlert("ط¯ط±ط³ظƒ ط³ظٹظ†طھظ‡ظٹ ط¨ط¹ط¯ $sec ط«ط§ظ†ظٹط©", "طھظ†ط¨ظٹظ‡: ظ†ظ‡ط§ظٹط© ط§ظ„ط­طµط©", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("درسك سينتهي بعد $sec ثانية", "تنبيه: نهاية الحصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakStart(state: ScheduleState) {
         val lessonNum = state.lessonNumber ?: return
         ringtoneMgr.playBreakRingtone()
-        speakAndAlert("ط§ظ†طھظ‡طھ ط§ظ„ط­طµط© $lessonNum. ط¨ط¯ط£طھ ط§ظ„ظپط±طµط©", "ط¨ط¯ط§ظٹط© ط§ظ„ظپط±طµط©", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("انتهت الحصة $lessonNum. بدأت الفرصة", "بداية الفرصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakEndAlert(state: ScheduleState) {
         val sec = prefs.breakEndAlertSec
         ringtoneMgr.playBreakRingtone()
-        speakAndAlert("ط§ظ„ظپط±طµط© ط³طھظ†طھظ‡ظٹ ط¨ط¹ط¯ $sec ط«ط§ظ†ظٹط©طŒ ط§ط³طھط¹ط¯ ظ„ظ„ط¯ط±ط³", "طھظ†ط¨ظٹظ‡: ظ†ظ‡ط§ظٹط© ط§ظ„ظپط±طµط©", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("الفرصة ستنتهي بعد $sec ثانية, استعد للدرس", "تنبيه: نهاية الفرصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     fun speakWelcomeMessage() {
@@ -117,18 +117,18 @@ class ScheduleMonitorService : Service() {
         val cal = java.util.Calendar.getInstance().apply { timeInMillis = now }
         val h = cal.get(java.util.Calendar.HOUR_OF_DAY)
         val m = cal.get(java.util.Calendar.MINUTE)
-        val baseMsg = "ط§ظ„ط³ظ„ط§ظ… ط¹ظ„ظٹظƒظ… ط§ط³طھط§ط° $ownerطŒ ط§ظ„ط³ط§ط¹ط© ط§ظ„ط¢ظ† ظ‡ظٹ $h ط³ط§ط¹ط© ظˆ $m ط¯ظ‚ظٹظ‚ط©"
+        val baseMsg = "السلام عليكم استاذ " + owner + ", الساعة الآن هي " + h + " ساعة و " + m + " دقيقة"
         val fullMsg = when (state.type) {
             PeriodType.LESSON -> {
                 val lessonNum = state.lessonNumber ?: 1
                 val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
-                if (lessonInfo.isNotBlank()) "$baseMsg. ط£ظ†طھ ط§ظ„ط¢ظ† ظپظٹ ط§ظ„ط­طµط© $lessonNum. ظ„ط¯ظٹظƒ ط¯ط±ط³ $lessonInfo"
-                else "$baseMsg. ط£ظ†طھ ط§ظ„ط¢ظ† ظپظٹ ط§ظ„ط­طµط© $lessonNum"
+                if (lessonInfo.isNotBlank()) baseMsg + ". أنت الآن في الحصة " + lessonNum + ". لديك درس " + lessonInfo
+                else baseMsg + ". أنت الآن في الحصة " + lessonNum
             }
-            PeriodType.BREAK -> "$baseMsg. ط£ظ†طھ ط§ظ„ط¢ظ† ظپظٹ ط§ظ„ظپط±طµط©"
-            PeriodType.BEFORE_SCHOOL -> "$baseMsg. ط£ظ†طھ ط§ظ„ط¢ظ† ط®ط§ط±ط¬ ط§ظ„ط¯ظˆط§ظ… ط§ظ„ط±ط³ظ…ظٹ"
-            PeriodType.AFTER_SCHOOL -> "$baseMsg. ط£ظ†طھ ط§ظ„ط¢ظ† ط®ط§ط±ط¬ ط§ظ„ط¯ظˆط§ظ… ط§ظ„ط±ط³ظ…ظٹ"
-            PeriodType.DISABLED -> "$baseMsg. ط§ظ„طھط·ط¨ظٹظ‚ ظ…ط¹ط·ظ„ ط§ظ„ظٹظˆظ…"
+            PeriodType.BREAK -> baseMsg + ". أنت الآن في الفرصة"
+            PeriodType.BEFORE_SCHOOL -> baseMsg + ". أنت الآن خارج الدوام الرسمي"
+            PeriodType.AFTER_SCHOOL -> baseMsg + ". أنت الآن خارج الدوام الرسمي"
+            PeriodType.DISABLED -> baseMsg + ". التطبيق معطل اليوم"
         }
         tts.speakNow(fullMsg)
     }
@@ -151,11 +151,11 @@ class ScheduleMonitorService : Service() {
 
     private fun getStatusText(state: ScheduleState): String {
         return when (state.type) {
-            PeriodType.LESSON -> "ط§ظ„ط­طµط© ${state.lessonNumber} - ظ…طھط¨ظ‚ظٹ ${ScheduleCalculator.formatRemaining(state.remainingSeconds)}"
-            PeriodType.BREAK -> "ط§ظ„ظپط±طµط© - ظ…طھط¨ظ‚ظٹ ${ScheduleCalculator.formatRemaining(state.remainingSeconds)}"
-            PeriodType.BEFORE_SCHOOL -> "ظ‚ط¨ظ„ ط§ظ„ط¯ظˆط§ظ…"
-            PeriodType.AFTER_SCHOOL -> "ط¨ط¹ط¯ ط§ظ„ط¯ظˆط§ظ…"
-            PeriodType.DISABLED -> "ظ…ط¹ط·ظ„ ط§ظ„ظٹظˆظ…"
+            PeriodType.LESSON -> "الحصة " + state.lessonNumber + " - متبقي " + ScheduleCalculator.formatRemaining(state.remainingSeconds)
+            PeriodType.BREAK -> "الفرصة - متبقي " + ScheduleCalculator.formatRemaining(state.remainingSeconds)
+            PeriodType.BEFORE_SCHOOL -> "قبل الدوام"
+            PeriodType.AFTER_SCHOOL -> "بعد الدوام"
+            PeriodType.DISABLED -> "معطل اليوم"
         }
     }
 
