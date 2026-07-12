@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_cool_start">#0F0C29</color>
+    <color name="bg_cool_center">#5C4B8A</color>
+    <color name="bg_cool_end">#1A5F7A</color>
+    <color name="glass_background">#30FFFFFF</color>
+    <color name="glass_border">#80FFFFFF</color>
+    <color name="btn_3d_top">#5BC8FF</color>
+    <color name="btn_3d_bottom">#1E90FF</color>
+    <color name="btn_3d_shadow">#0B3D91</color>
+    <color name="btn_accent_top">#FFD700</color>
+    <color name="btn_accent_bottom">#FF8C00</color>
+    <color name="btn_accent_shadow">#8B4513</color>
+    <color name="white_text">#FFFFFF</color>
+    <color name="primary_text">#FFFFFF</color>
+    <color name="secondary_text">#E0E0E0</color>
+    <color name="neon_blue">#00E5FF</color>
+    <color name="neon_green">#39FF14</color>
+    <color name="neon_orange">#FFA500</color>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ط§ظ„ظ…ظ†ط¨ظ‡ ط§ظ„ط°ظƒظٹ</string>
+    <string name="app_subtitle">طھطµظ…ظٹظ… ط§ظ„ط£ط³طھط§ط° ظˆط§ط«ظ‚</string>
+    <string name="notification_channel_name">ظ…ط±ط§ظ‚ط¨ط© ط§ظ„ط¬ط¯ظˆظ„</string>
+    <string name="notification_channel_desc">ط¥ط´ط¹ط§ط±ط§طھ ط§ظ„ظ…ظ†ط¨ظ‡ ط§ظ„ط°ظƒظٹ</string>
+    <string name="notification_monitoring_title">ط§ظ„ظ…ظ†ط¨ظ‡ ط§ظ„ط°ظƒظٹ ظٹط¹ظ…ظ„</string>
+    <string name="permission_denied">طھظ… ط±ظپط¶ ط§ظ„ط¥ط°ظ†</string>
+    <string name="btn_schedule">ط¬ط¯ظˆظ„ ط§ظ„ط¯ط±ظˆط³</string>
+    <string name="btn_settings">ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ</string>
+    <string name="btn_test_sound">ط§ط®طھط¨ط§ط± ط§ظ„طµظˆطھ</string>
+    <string name="btn_pause_today">ط¥ظٹظ‚ط§ظپ ط§ظ„ظٹظˆظ…</string>
+    <string name="remaining_label">ط§ظ„ظˆظ‚طھ ط§ظ„ظ…طھط¨ظ‚ظٹ</string>
+    <string name="schedule_title">ط¬ط¯ظˆظ„ ط§ظ„ط¯ط±ظˆط³</string>
+    <string name="btn_edit">طھط¹ط¯ظٹظ„</string>
+    <string name="btn_back">ط±ط¬ظˆط¹</string>
+    <string name="settings_title">ط§ظ„ط¥ط¹ط¯ط§ط¯ط§طھ</string>
+    <string name="hint_lesson">ظ…ط«ط§ظ„: ط±ظٹط§ط¶ظٹط§طھ - ط§ظ„طµظپ ط§ظ„ط£ظˆظ„</string>
+</resources>
