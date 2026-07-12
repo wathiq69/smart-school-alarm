@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Theme.SmartSchoolAlarm" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/btn_3d_bottom</item>
         <item name="colorPrimaryVariant">@color/btn_3d_top</item>
@@ -8,45 +9,50 @@
         <item name="colorSecondaryVariant">@color/btn_accent_top</item>
         <item name="colorOnSecondary">@color/white_text</item>
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:navigationBarColor">@color/bg_cool_end</item>
         <item name="android:windowBackground">@drawable/bg_cool_gradient</item>
     </style>
+
     <style name="GlassTitleText">
-        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textColor">@color/primary_text</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowColor">#40000000</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">2</item>
         <item name="android:shadowRadius">3</item>
     </style>
+
     <style name="GlassBodyText">
-        <item name="android:textColor">@color/white_text</item>
+        <item name="android:textColor">@color/secondary_text</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowColor">#20000000</item>
         <item name="android:shadowDx">0.5</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
     </style>
+
     <style name="ClockText">
         <item name="android:textColor">@color/neon_blue</item>
         <item name="android:textSize">64sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">@color/neon_blue</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">0</item>
-        <item name="android:shadowRadius">20</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
     </style>
+
     <style name="RemainingText">
         <item name="android:textColor">@color/neon_orange</item>
         <item name="android:textSize">48sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">@color/neon_orange</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">0</item>
-        <item name="android:shadowRadius">15</item>
+        <item name="android:shadowColor">#40000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">4</item>
     </style>
+
     <style name="Button3D" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/btn_3d_primary</item>
         <item name="android:textColor">@color/white_text</item>
@@ -58,4 +64,5 @@
         <item name="android:paddingBottom">14dp</item>
         <item name="android:elevation">6dp</item>
     </style>
+
 </resources>
