@@ -114,7 +114,6 @@ class PreferencesManager private constructor(context: Context) {
         return when (cal.get(java.util.Calendar.DAY_OF_WEEK)) {
             java.util.Calendar.SUNDAY -> 0
             java.util.Calendar.MONDAY -> 1
-            java.util.Calendar.TEDNESDAY -> 2
             java.util.Calendar.TUESDAY -> 2
             java.util.Calendar.WEDNESDAY -> 3
             java.util.Calendar.THURSDAY -> 4
