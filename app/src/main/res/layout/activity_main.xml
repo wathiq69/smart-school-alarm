@@ -130,13 +130,36 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
-                <Button
-                    android:id="@+id/btnTestSound"
-                    android:layout_width="0dp"
+                            <Button
+                android:id="@+id/btnSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_schedule"
+                style="@style/Button3D"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="جدول اليوم"
+                style="@style/GlassTitleText"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp">
+
+                <TableLayout
+                    android:id="@+id/todayScheduleTable"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/btn_test_sound"
-                    style="@style/Button3D" />
+                    android:stretchColumns="*"
+                    android:background="@drawable/glass_card"
+                    android:padding="4dp" />
+
+            </HorizontalScrollView>
                 <View android:layout_width="8dp" android:layout_height="0dp" />
                 <Button
                     android:id="@+id/btnPauseToday"
