@@ -1,43 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- خلفية متدرجة فاتحة: سماوي → بنفسجي فاتح → تركواز فاتح -->
     <color name="bg_cool_start">#A1C4FD</color>
     <color name="bg_cool_center">#C2E9FB</color>
     <color name="bg_cool_end">#D4FC79</color>
-
-    <!-- بطاقة زجاجية فاتحة -->
     <color name="glass_background">#80FFFFFF</color>
     <color name="glass_border">#B3FFFFFF</color>
-
-    <!-- أزرار 3D أزرق -->
     <color name="btn_3d_top">#5BC8FF</color>
     <color name="btn_3d_bottom">#1E90FF</color>
     <color name="btn_3d_shadow">#0B3D91</color>
-
-    <!-- أزرار 3D ذهبي (Accent) -->
-    <color background_color_accent_top">#FFD700</color>
     <color name="btn_accent_top">#FFD700</color>
     <color name="btn_accent_bottom">#FF8C00</color>
     <color name="btn_accent_shadow">#8B4513</color>
-
-    <!-- أزرار 3D برتقالي -->
     <color name="btn_orange_top">#FFB74D</color>
     <color name="btn_orange_bottom">#FF6D00</color>
     <color name="btn_orange_shadow">#E65100</color>
-
-    <!-- أزرار 3D أحمر -->
     <color name="btn_red_top">#EF5350</color>
     <color name="btn_red_bottom">#C62828</color>
     <color name="btn_red_shadow">#B71C1C</color>
-
-    <!-- ألوان نصوص -->
     <color name="white_text">#FFFFFF</color>
     <color name="primary_text">#1A1A2E</color>
     <color name="secondary_text">#2C3E50</color>
-
-    <!-- ألوان النيون -->
     <color name="neon_blue">#0066CC</color>
     <color name="neon_green">#008000</color>
-    <color background_color_neon_orange">#FF6600</color>
     <color name="neon_orange">#FF6600</color>
 </resources>
