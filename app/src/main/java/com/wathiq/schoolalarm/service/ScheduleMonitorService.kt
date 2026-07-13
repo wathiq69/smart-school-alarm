@@ -115,9 +115,25 @@ class ScheduleMonitorService : Service() {
         val state = ScheduleCalculator.getCurrentState(prefs, now)
         val owner = prefs.ownerName
         val cal = java.util.Calendar.getInstance().apply { timeInMillis = now }
-        val h = cal.get(java.util.Calendar.HOUR_OF_DAY)
+        val h12 = cal.get(java.util.Calendar.HOUR).let { if (it == 0) 12 else it }
         val m = cal.get(java.util.Calendar.MINUTE)
-        val baseMsg = "السلام عليكم استاذ " + owner + ", الساعة الآن هي " + h + " ساعة و " + m + " دقيقة"
+        val amPm = if (cal.get(java.util.Calendar.AM_PM) == java.util.Calendar.AM) "صباحا" else "مساء"
+        val hourStr = when (h12) {
+            1 -> "الواحدة"
+            2 -> "الثانية"
+            3 -> "الثالثة"
+            4 -> "الرابعة"
+            5 -> "الخامسة"
+            6 -> "السادسة"
+            7 -> "السابعة"
+            8 -> "الثامنة"
+            9 -> "التاسعة"
+            10 -> "العاشرة"
+            11 -> "الحادية عشرة"
+            12 -> "الثانية عشرة"
+            else -> h12.toString()
+        }
+        val baseMsg = "السلام عليكم استاذ " + owner + ", الساعة الآن هي " + hourStr + " " + amPm + " و " + m + " دقيقة"
         val fullMsg = when (state.type) {
             PeriodType.LESSON -> {
                 val lessonNum = state.lessonNumber ?: 1
