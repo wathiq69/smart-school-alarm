@@ -8,7 +8,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TableRow
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         ContextCompat.startForegroundService(this, intent)
     }
 
-        private fun updateClock() {
+    private fun updateClock() {
         val cal = Calendar.getInstance()
         var h12 = cal.get(Calendar.HOUR)
         if (h12 == 0) h12 = 12
@@ -140,6 +144,59 @@ class MainActivity : AppCompatActivity() {
                 binding.tvRemainingLabel.text = "التطبيق متوقف"
                 binding.tvLessonInfo.visibility = View.GONE
             }
+        }
+        buildTodayScheduleTable()
+    }
+
+    private fun buildTodayScheduleTable() {
+        val table = binding.todayScheduleTable
+        table.removeAllViews()
+        val cal = java.util.Calendar.getInstance()
+        val today = when (cal.get(java.util.Calendar.DAY_OF_WEEK)) {
+            java.util.Calendar.SUNDAY -> 0
+            java.util.Calendar.MONDAY -> 1
+            java.util.Calendar.TUESDAY -> 2
+            java.util.Calendar.WEDNESDAY -> 3
+            java.util.Calendar.THURSDAY -> 4
+            java.util.Calendar.FRIDAY -> 5
+            java.util.Calendar.SATURDAY -> 6
+            else -> 0
+        }
+        if (today > 4) {
+            val row = TableRow(this)
+            val tv = TextView(this).apply {
+                text = "عطلة اليوم"
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                setPadding(16, 24, 16, 24)
+                textSize = 16f
+            }
+            row.addView(tv)
+            table.addView(row)
+            return
+        }
+        val schedule = prefs.getSchedule()
+        val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        for (i in 0 until 6) {
+            val row = TableRow(this)
+            if (i % 2 == 0) row.setBackgroundColor(Color.parseColor("#20FFFFFF"))
+            val lessonCell = TextView(this).apply {
+                text = "الحصة " + (i + 1)
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16)
+                textSize = 13f
+            }
+            row.addView(lessonCell, cellParams)
+            val infoCell = TextView(this).apply {
+                text = if (schedule[today][i].isBlank()) "غير محدد" else schedule[today][i]
+                setTextColor(Color.WHITE)
+                gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16)
+                textSize = 13f
+            }
+            row.addView(infoCell, cellParams)
+            table.addView(row)
         }
     }
 }
