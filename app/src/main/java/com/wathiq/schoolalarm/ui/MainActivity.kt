@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -151,6 +152,7 @@ class MainActivity : AppCompatActivity() {
     private fun buildTodayScheduleTable() {
         val table = binding.todayScheduleTable
         table.removeAllViews()
+        table.layoutDirection = View.LAYOUT_DIRECTION_RTL
         val cal = java.util.Calendar.getInstance()
         val today = when (cal.get(java.util.Calendar.DAY_OF_WEEK)) {
             java.util.Calendar.SUNDAY -> 0
@@ -162,38 +164,35 @@ class MainActivity : AppCompatActivity() {
             java.util.Calendar.SATURDAY -> 6
             else -> 0
         }
+        val textColor = Color.parseColor("#1A1A2E")
+        val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        
         if (today > 4) {
             val row = TableRow(this)
             val tv = TextView(this).apply {
-                text = "عطلة اليوم"
-                setTextColor(Color.WHITE)
-                gravity = Gravity.CENTER
-                setPadding(16, 24, 16, 24)
-                textSize = 16f
+                text = "عطلة اليوم"; setTextColor(textColor); gravity = Gravity.CENTER
+                setPadding(16, 24, 16, 24); textSize = 16f
             }
             row.addView(tv)
             table.addView(row)
             return
         }
+        
         val schedule = prefs.getSchedule()
-        val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
         for (i in 0 until 6) {
             val row = TableRow(this)
             if (i % 2 == 0) row.setBackgroundColor(Color.parseColor("#20FFFFFF"))
             val lessonCell = TextView(this).apply {
-                text = "الحصة " + (i + 1)
-                setTextColor(Color.WHITE)
-                gravity = Gravity.CENTER
-                setPadding(12, 16, 12, 16)
-                textSize = 13f
+                text = "حصة " + (i + 1); setTextColor(textColor); gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16); textSize = 13f
+                maxLines = 1; ellipsize = TextUtils.TruncateAt.END
             }
             row.addView(lessonCell, cellParams)
             val infoCell = TextView(this).apply {
                 text = if (schedule[today][i].isBlank()) "غير محدد" else schedule[today][i]
-                setTextColor(Color.WHITE)
-                gravity = Gravity.CENTER
-                setPadding(12, 16, 12, 16)
-                textSize = 13f
+                setTextColor(textColor); gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16); textSize = 13f
+                maxLines = 1; ellipsize = TextUtils.TruncateAt.END
             }
             row.addView(infoCell, cellParams)
             table.addView(row)
