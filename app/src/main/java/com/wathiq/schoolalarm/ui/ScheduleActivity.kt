@@ -2,10 +2,10 @@ package com.wathiq.schoolalarm.ui
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
@@ -32,21 +32,21 @@ class ScheduleActivity : AppCompatActivity() {
     private fun buildScheduleTable() {
         val table = binding.tableSchedule
         table.removeAllViews()
+        table.layoutDirection = android.view.View.LAYOUT_DIRECTION_RTL
         val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+        val textColor = Color.parseColor("#1A1A2E")
 
         val headerRow = TableRow(this)
         headerRow.setBackgroundColor(Color.parseColor("#40000000"))
         val emptyHeader = TextView(this).apply {
-            text = "اليوم"
-            setTextColor(Color.WHITE); gravity = Gravity.CENTER
-            setPadding(8, 12, 8, 12); textSize = 13f
+            text = "اليوم"; setTextColor(textColor); gravity = Gravity.CENTER
+            setPadding(8, 12, 8, 12); textSize = 13f; maxLines = 1; ellipsize = TextUtils.TruncateAt.END
         }
         headerRow.addView(emptyHeader, cellParams)
         for (i in 1..6) {
             val tv = TextView(this).apply {
-                text = "الحصة " + i
-                setTextColor(Color.WHITE); gravity = Gravity.CENTER
-                setPadding(8, 12, 8, 12); textSize = 13f
+                text = "حصة " + i; setTextColor(textColor); gravity = Gravity.CENTER
+                setPadding(8, 12, 8, 12); textSize = 13f; maxLines = 1; ellipsize = TextUtils.TruncateAt.END
             }
             headerRow.addView(tv, cellParams)
         }
@@ -56,9 +56,8 @@ class ScheduleActivity : AppCompatActivity() {
             val row = TableRow(this)
             if (d % 2 == 0) row.setBackgroundColor(Color.parseColor("#20FFFFFF"))
             val dayCell = TextView(this).apply {
-                text = dayNames[d]
-                setTextColor(Color.WHITE); gravity = Gravity.CENTER
-                setPadding(8, 12, 8, 12); textSize = 13f
+                text = dayNames[d]; setTextColor(textColor); gravity = Gravity.CENTER
+                setPadding(8, 12, 8, 12); textSize = 13f; maxLines = 1; ellipsize = TextUtils.TruncateAt.END
                 setOnClickListener { showEditDayDialog(d) }
             }
             row.addView(dayCell, cellParams)
@@ -66,9 +65,8 @@ class ScheduleActivity : AppCompatActivity() {
                 val lessonText = schedule[d][l]
                 val display = if (lessonText.isBlank()) "-" else lessonText
                 val cell = TextView(this).apply {
-                    text = display
-                    setTextColor(Color.WHITE); gravity = Gravity.CENTER
-                    setPadding(8, 12, 8, 12); textSize = 13f
+                    text = display; setTextColor(textColor); gravity = Gravity.CENTER
+                    setPadding(8, 12, 8, 12); textSize = 12f; maxLines = 1; ellipsize = TextUtils.TruncateAt.END
                     setOnClickListener { showEditLessonDialog(d, l) }
                 }
                 row.addView(cell, cellParams)
@@ -88,10 +86,7 @@ class ScheduleActivity : AppCompatActivity() {
         val et5 = dialogView.findViewById<EditText>(R.id.et5)
         val et6 = dialogView.findViewById<EditText>(R.id.et6)
         val editTexts = arrayOf(et1, et2, et3, et4, et5, et6)
-        for (i in 0 until 6) {
-            editTexts[i].setText(schedule[dayIndex][i])
-            editTexts[i].hint = "مثال: رياضيات - الصف الأول"
-        }
+        for (i in 0 until 6) { editTexts[i].setText(schedule[dayIndex][i]); editTexts[i].hint = "مثال: رياضيات - الصف الأول" }
         AlertDialog.Builder(this).setView(dialogView).setTitle(dayNames[dayIndex])
             .setPositiveButton("حفظ") { _, _ ->
                 for (i in 0 until 6) schedule[dayIndex][i] = editTexts[i].text.toString().trim()
@@ -102,9 +97,7 @@ class ScheduleActivity : AppCompatActivity() {
     }
 
     private fun showEditLessonDialog(dayIndex: Int, lessonIndex: Int) {
-        val input = EditText(this).apply {
-            setText(schedule[dayIndex][lessonIndex]); hint = "مثال: رياضيات - الصف الأول"
-        }
+        val input = EditText(this).apply { setText(schedule[dayIndex][lessonIndex]); hint = "مثال: رياضيات - الصف الأول" }
         AlertDialog.Builder(this).setTitle(dayNames[dayIndex] + " - الحصة " + (lessonIndex + 1))
             .setView(input)
             .setPositiveButton("حفظ") { _, _ ->
