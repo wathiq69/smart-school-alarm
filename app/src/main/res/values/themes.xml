@@ -33,9 +33,9 @@
         <item name="android:shadowRadius">2</item>
     </style>
 
-    <style name="ClockText">
+        <style name="ClockText">
         <item name="android:textColor">@color/neon_blue</item>
-        <item name="android:textSize">64sp</item>
+        <item name="android:textSize">42sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">#40000000</item>
         <item name="android:shadowDx">1</item>
