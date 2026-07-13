@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -31,10 +32,8 @@ class ScheduleActivity : AppCompatActivity() {
     private fun buildScheduleTable() {
         val table = binding.tableSchedule
         table.removeAllViews()
-
         val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
 
-        // صف العناوين: فراغ + الحصص 1..6
         val headerRow = TableRow(this)
         headerRow.setBackgroundColor(Color.parseColor("#40000000"))
         val emptyHeader = TextView(this).apply {
@@ -45,7 +44,7 @@ class ScheduleActivity : AppCompatActivity() {
         headerRow.addView(emptyHeader, cellParams)
         for (i in 1..6) {
             val tv = TextView(this).apply {
-                text = "الحصة $i"
+                text = "الحصة " + i
                 setTextColor(Color.WHITE); gravity = Gravity.CENTER
                 setPadding(8, 12, 8, 12); textSize = 13f
             }
@@ -53,14 +52,14 @@ class ScheduleActivity : AppCompatActivity() {
         }
         table.addView(headerRow)
 
-        // صفوف الأيام
         for (d in 0 until 5) {
             val row = TableRow(this)
             if (d % 2 == 0) row.setBackgroundColor(Color.parseColor("#20FFFFFF"))
             val dayCell = TextView(this).apply {
                 text = dayNames[d]
                 setTextColor(Color.WHITE); gravity = Gravity.CENTER
-                setPadding(8, 12, 8, 12); textSize = 13f; setOnClickListener { showEditDayDialog(d) }
+                setPadding(8, 12, 8, 12); textSize = 13f
+                setOnClickListener { showEditDayDialog(d) }
             }
             row.addView(dayCell, cellParams)
             for (l in 0 until 6) {
@@ -82,11 +81,13 @@ class ScheduleActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_day, null)
         val tvTitle = dialogView.findViewById<TextView>(R.id.tvDialogDayName)
         tvTitle.text = "تعديل " + dayNames[dayIndex]
-        val editTexts = arrayOf(
-            dialogView.findViewById(R.id.et1), dialogView.findViewById(R.id.et2),
-            dialogView.findViewById(R.id.et3), dialogView.findViewById(R.id.et4),
-            dialogView.findViewById(R.id.et5), dialogView.findViewById(R.id.et6)
-        )
+        val et1 = dialogView.findViewById<EditText>(R.id.et1)
+        val et2 = dialogView.findViewById<EditText>(R.id.et2)
+        val et3 = dialogView.findViewById<EditText>(R.id.et3)
+        val et4 = dialogView.findViewById<EditText>(R.id.et4)
+        val et5 = dialogView.findViewById<EditText>(R.id.et5)
+        val et6 = dialogView.findViewById<EditText>(R.id.et6)
+        val editTexts = arrayOf(et1, et2, et3, et4, et5, et6)
         for (i in 0 until 6) {
             editTexts[i].setText(schedule[dayIndex][i])
             editTexts[i].hint = "مثال: رياضيات - الصف الأول"
@@ -101,7 +102,7 @@ class ScheduleActivity : AppCompatActivity() {
     }
 
     private fun showEditLessonDialog(dayIndex: Int, lessonIndex: Int) {
-        val input = android.widget.EditText(this).apply {
+        val input = EditText(this).apply {
             setText(schedule[dayIndex][lessonIndex]); hint = "مثال: رياضيات - الصف الأول"
         }
         AlertDialog.Builder(this).setTitle(dayNames[dayIndex] + " - الحصة " + (lessonIndex + 1))
