@@ -17,6 +17,10 @@ class PreferencesManager private constructor(context: Context) {
         private const val KEY_LESSON_COUNT = "lesson_count"
         private const val KEY_LESSON_END_ALERT_SEC = "lesson_end_alert_sec"
         private const val KEY_BREAK_END_ALERT_SEC = "break_end_alert_sec"
+        private const val KEY_LESSON_RINGTONE = "lesson_ringtone"
+        private const val KEY_BREAK_RINGTONE = "break_ringtone"
+        private const val KEY_CUSTOM_LESSON_RINGTONE = "custom_lesson_ringtone"
+        private const val KEY_CUSTOM_BREAK_RINGTONE = "custom_break_ringtone"
         private const val KEY_SCHEDULE = "schedule"
         private const val KEY_WORKDAYS = "workdays"
         private const val KEY_HOLIDAYS = "holidays"
@@ -63,6 +67,22 @@ class PreferencesManager private constructor(context: Context) {
         get() = prefs.getInt(KEY_BREAK_END_ALERT_SEC, 30)
         set(value) = prefs.edit().putInt(KEY_BREAK_END_ALERT_SEC, value).apply()
 
+    var lessonRingtone: String
+        get() = prefs.getString(KEY_LESSON_RINGTONE, "ringtone_1") ?: "ringtone_1"
+        set(value) = prefs.edit().putString(KEY_LESSON_RINGTONE, value).apply()
+
+    var breakRingtone: String
+        get() = prefs.getString(KEY_BREAK_RINGTONE, "ringtone_2") ?: "ringtone_2"
+        set(value) = prefs.edit().putString(KEY_BREAK_RINGTONE, value).apply()
+
+    var customLessonRingtone: String
+        get() = prefs.getString(KEY_CUSTOM_LESSON_RINGTONE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_CUSTOM_LESSON_RINGTONE, value).apply()
+
+    var customBreakRingtone: String
+        get() = prefs.getString(KEY_CUSTOM_BREAK_RINGTONE, "") ?: ""
+        set(value) = prefs.edit().putString(KEY_CUSTOM_BREAK_RINGTONE, value).apply()
+
     fun getSchedule(): Array<Array<String>> {
         val json = prefs.getString(KEY_SCHEDULE, null) ?: return Array(5) { Array(6) { "" } }
         return try {
@@ -94,6 +114,7 @@ class PreferencesManager private constructor(context: Context) {
         return when (cal.get(java.util.Calendar.DAY_OF_WEEK)) {
             java.util.Calendar.SUNDAY -> 0
             java.util.Calendar.MONDAY -> 1
+            java.util.Calendar.TEDNESDAY -> 2
             java.util.Calendar.TUESDAY -> 2
             java.util.Calendar.WEDNESDAY -> 3
             java.util.Calendar.THURSDAY -> 4
