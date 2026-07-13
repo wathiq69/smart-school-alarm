@@ -17,7 +17,7 @@ class ScheduleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScheduleBinding
     private val prefs by lazy { PreferencesManager.getInstance(this) }
     private lateinit var schedule: Array<Array<String>>
-    private val dayNames = arrayOf("ط§ظ„ط£ط­ط¯", "ط§ظ„ط¥ط«ظ†ظٹظ†", "ط§ظ„ط«ظ„ط§ط«ط§ط،", "ط§ظ„ط£ط±ط¨ط¹ط§ط،", "ط§ظ„ط®ظ…ظٹط³")
+    private val dayNames = arrayOf("الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,8 @@ class ScheduleActivity : AppCompatActivity() {
             val sb = StringBuilder()
             for (i in 0 until 6) {
                 val info = schedule[position][i]
-                sb.append("ط§ظ„ط­طµط© ${i + 1}: ${if (info.isBlank()) "ط؛ظٹط± ظ…ط­ط¯ط¯" else info}\n")
+                val display = if (info.isBlank()) "غير محدد" else info
+                sb.append("الحصة " + (i + 1) + ": " + display + "\n")
             }
             holder.itemBinding.tvLessons.text = sb.toString().trim()
             holder.itemBinding.btnEditDay.setOnClickListener { showEditDayDialog(position) }
@@ -49,19 +50,19 @@ class ScheduleActivity : AppCompatActivity() {
 
     private fun showEditDayDialog(dayIndex: Int) {
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_edit_day, null)
-        dialogView.findViewById<TextView>(R.id.tvDialogDayName).text = "طھط¹ط¯ظٹظ„ ${dayNames[dayIndex]}"
+        dialogView.findViewById<TextView>(R.id.tvDialogDayName).text = "تعديل " + dayNames[dayIndex]
         val editTexts = arrayOf(
             dialogView.findViewById<EditText>(R.id.et1), dialogView.findViewById<EditText>(R.id.et2),
             dialogView.findViewById<EditText>(R.id.et3), dialogView.findViewById<EditText>(R.id.et4),
             dialogView.findViewById<EditText>(R.id.et5), dialogView.findViewById<EditText>(R.id.et6)
         )
-        for (i in 0 until 6) { editTexts[i].setText(schedule[dayIndex][i]); editTexts[i].hint = "ظ…ط«ط§ظ„: ط±ظٹط§ط¶ظٹط§طھ - ط§ظ„طµظپ ط§ظ„ط£ظˆظ„" }
+        for (i in 0 until 6) { editTexts[i].setText(schedule[dayIndex][i]); editTexts[i].hint = "مثال: رياضيات - الصف الأول" }
         AlertDialog.Builder(this).setView(dialogView).setTitle(dayNames[dayIndex])
-            .setPositiveButton("ط­ظپط¸") { _, _ ->
+            .setPositiveButton("حفظ") { _, _ ->
                 for (i in 0 until 6) { schedule[dayIndex][i] = editTexts[i].text.toString().trim() }
                 prefs.setSchedule(schedule); binding.rvSchedule.adapter?.notifyDataSetChanged()
-                android.widget.Toast.makeText(this, "طھظ… ط­ظپط¸ ط¬ط¯ظˆظ„ ${dayNames[dayIndex]}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(this, "تم حفظ جدول " + dayNames[dayIndex], android.widget.Toast.LENGTH_SHORT).show()
             }
-            .setNegativeButton("ط¥ظ„ط؛ط§ط،", null).show()
+            .setNegativeButton("إلغاء", null).show()
     }
 }
