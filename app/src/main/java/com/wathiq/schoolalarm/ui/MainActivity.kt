@@ -59,11 +59,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnTestSound.setOnClickListener {
             val intent = Intent(this, ScheduleMonitorService::class.java).apply { action = ScheduleMonitorService.ACTION_SPEAK_WELCOME }
             ContextCompat.startForegroundService(this, intent)
-            Toast.makeText(this, "جاري اختبار الصوت...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "جاري اختبار الصوت", Toast.LENGTH_SHORT).show()
         }
         binding.btnPauseToday.setOnClickListener {
             prefs.pauseToday = !prefs.pauseToday
-            Toast.makeText(this, if (prefs.pauseToday) "تم إيقاف التطبيق اليوم" else "تم تفعيل التطبيق اليوم", Toast.LENGTH_SHORT).show()
+            val msg = if (prefs.pauseToday) "تم إيقاف التطبيق اليوم" else "تم تفعيل التطبيق اليوم"
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             updatePauseButton()
         }
     }
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         binding.tvClock.text = String.format("%02d:%02d:%02d", h, m, s)
         val dayNames = arrayOf("الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت")
         val monthNames = arrayOf("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر")
-        binding.tvDate.text = "${dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1]}، ${cal.get(Calendar.DAY_OF_MONTH)} ${monthNames[cal.get(Calendar.MONTH)]} ${cal.get(Calendar.YEAR)}"
+        binding.tvDate.text = dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1] + "، " + cal.get(Calendar.DAY_OF_MONTH) + " " + monthNames[cal.get(Calendar.MONTH)] + " " + cal.get(Calendar.YEAR)
     }
 
     private fun updateScheduleStatus() {
@@ -105,10 +106,10 @@ class MainActivity : AppCompatActivity() {
             PeriodType.LESSON -> {
                 val lessonNum = state.lessonNumber ?: 1
                 val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
-                binding.tvStatus.text = "في الحصة $lessonNum"
+                binding.tvStatus.text = "في الحصة " + lessonNum
                 binding.tvRemaining.text = ScheduleCalculator.formatRemaining(state.remainingSeconds)
                 binding.tvRemainingLabel.text = "الوقت المتبقي"
-                binding.tvLessonInfo.text = if (lessonInfo.isNotBlank()) "الدرس: $lessonInfo" else "لم يحدد الدرس"
+                binding.tvLessonInfo.text = if (lessonInfo.isNotBlank()) "الدرس: " + lessonInfo else "لم يحدد الدرس"
                 binding.tvLessonInfo.visibility = View.VISIBLE
             }
             PeriodType.BREAK -> {
