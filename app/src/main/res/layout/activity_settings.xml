@@ -7,22 +7,26 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:paddingBottom="16dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
+
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_back"
                 style="@style/Button3D" />
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -31,194 +35,269 @@
                 style="@style/GlassTitleText"
                 android:gravity="center"
                 android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowOwnerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvOwnerName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditOwner"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowSchoolStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvSchoolStart"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditStart"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowLessonDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvLessonDuration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditLessonDuration"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowBreakDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvBreakDuration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditBreakDuration"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowLessonCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvLessonCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditLessonCount"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowLessonAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvLessonAlertSec"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditLessonAlert"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowBreakAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvBreakAlertSec"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditBreakAlert"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowWorkdays"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
+            android:padding="16dp"
             android:background="@drawable/glass_card"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvWorkdays"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditWorkdays"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/rowHolidays"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:padding="12dp"
-            android:background="@drawable/glass_card">
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:clickable="true"
+            android:focusable="true">
+
             <TextView
                 android:id="@+id/tvHolidays"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 style="@style/GlassBodyText" />
-            <Button
-                android:id="@+id/btnEditHolidays"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="طھط¹ط¯ظٹظ„"
-                style="@style/Button3D" />
+                android:text=">"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginStart="8dp" />
+
         </LinearLayout>
+
     </LinearLayout>
+
 </ScrollView>
