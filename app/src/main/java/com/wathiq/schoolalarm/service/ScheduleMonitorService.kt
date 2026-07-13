@@ -88,26 +88,26 @@ class ScheduleMonitorService : Service() {
         val lessonNum = state.lessonNumber ?: return
         val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
         ringtoneMgr.playLessonRingtone()
-        val msg = if (lessonInfo.isNotBlank()) "بدأت الحصة $lessonNum. لديك درس $lessonInfo" else "بدأت الحصة $lessonNum"
-        speakAndAlert(msg, "بداية الحصة $lessonNum", NotificationManager.IMPORTANCE_HIGH)
+        val msg = if (lessonInfo.isNotBlank()) "بدأت الحصة " + lessonNum + ". لديك درس " + lessonInfo else "بدأت الحصة " + lessonNum
+        speakAndAlert(msg, "بداية الحصة " + lessonNum, NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onLessonEndAlert(state: ScheduleState) {
         val sec = prefs.lessonEndAlertSec
         ringtoneMgr.playLessonRingtone()
-        speakAndAlert("درسك سينتهي بعد $sec ثانية", "تنبيه: نهاية الحصة", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("درسك سينتهي بعد " + sec + " ثانية", "تنبيه: نهاية الحصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakStart(state: ScheduleState) {
         val lessonNum = state.lessonNumber ?: return
         ringtoneMgr.playBreakRingtone()
-        speakAndAlert("انتهت الحصة $lessonNum. بدأت الفرصة", "بداية الفرصة", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("انتهت الحصة " + lessonNum + ". بدأت الفرصة", "بداية الفرصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakEndAlert(state: ScheduleState) {
         val sec = prefs.breakEndAlertSec
         ringtoneMgr.playBreakRingtone()
-        speakAndAlert("الفرصة ستنتهي بعد $sec ثانية, استعد للدرس", "تنبيه: نهاية الفرصة", NotificationManager.IMPORTANCE_HIGH)
+        speakAndAlert("الفرصة ستنتهي بعد " + sec + " ثانية, استعد للدرس", "تنبيه: نهاية الفرصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     fun speakWelcomeMessage() {
