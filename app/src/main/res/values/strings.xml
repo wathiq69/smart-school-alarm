@@ -13,7 +13,7 @@
     <string name="remaining_label">الوقت المتبقي</string>
     <string name="schedule_title">جدول الدروس</string>
     <string name="btn_edit">تعديل</string>
-    <string name="btn_back">رجوع</string>
+    <string name="btn_back">رجوس</string>
     <string name="settings_title">الإعدادات</string>
     <string name="hint_lesson">مثال: رياضيات - الصف الأول</string>
 </resources>
