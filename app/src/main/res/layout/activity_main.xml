@@ -126,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/remaining_label"
                         style="@style/GlassBodyText"
-                        android:layout_marginTop="4dp" />
+                    android:layout_marginTop="4dp" />
 
                     <TextView
                         android:id="@+id/tvLessonInfo"
@@ -147,7 +147,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btn_schedule"
                 style="@style/Button3D"
-                android:background="@drawable/btn_3d_orange"
                 android:layout_marginBottom="10dp" />
 
             <TextView
@@ -190,13 +189,13 @@
                 <View android:layout_width="8dp" android:layout_height="0dp" />
 
                 <Button
-                android:id="@+id/btnSchedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_schedule"
-                style="@style/Button3D"
-                android:background="@drawable/btn_3d_orange"
-                android:layout_marginBottom="10dp" />
+                    android:id="@+id/btnPauseToday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/btn_pause_today"
+                    style="@style/Button3D"
+                    android:background="@drawable/btn_3d_accent" />
 
             </LinearLayout>
 
