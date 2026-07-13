@@ -13,7 +13,15 @@
     <string name="remaining_label">الوقت المتبقي</string>
     <string name="schedule_title">جدول الدروس</string>
     <string name="btn_edit">تعديل</string>
-    <string name="btn_back">رجوس</string>
+    <string name="btn_back">رجوع</string>
     <string name="settings_title">الإعدادات</string>
     <string name="hint_lesson">مثال: رياضيات - الصف الأول</string>
+
+    <string name="label_owner_name">الاسم: %1$s</string>
+    <string name="label_school_start">بداية الدوام: %1$02d:%2$02d</string>
+    <string name="label_lesson_duration">طول الحصة: %1$d دقيقة</string>
+    <string name="label_break_duration">طول الفرصة: %1$d دقيقة</string>
+    <string name="label_lesson_count">عدد الحصص: %1$d</string>
+    <string name="label_lesson_alert">تنبيه قبل نهاية الحصة: %1$d ثانية</string>
+    <string name="label_break_alert">تنبيه قبل نهاية الفرصة: %1$d ثانية</string>
 </resources>
