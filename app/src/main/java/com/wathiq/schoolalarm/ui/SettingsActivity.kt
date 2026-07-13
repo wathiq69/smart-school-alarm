@@ -1,19 +1,45 @@
 package com.wathiq.schoolalarm.ui
 
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.wathiq.schoolalarm.R
 import com.wathiq.schoolalarm.databinding.ActivitySettingsBinding
 import com.wathiq.schoolalarm.prefs.PreferencesManager
+import com.wathiq.schoolalarm.util.RingtoneManager
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private val prefs by lazy { PreferencesManager.getInstance(this) }
+    private val ringtoneMgr by lazy { RingtoneManager.getInstance(this) }
+    private var selectingLessonRingtone = true
+
+    private val ringtonePicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+        if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val uriStr = uri.toString()
+                if (selectingLessonRingtone) {
+                    prefs.customLessonRingtone = uriStr
+                    binding.tvLessonRingtone.text = getString(R.string.label_lesson_ringtone, "Custom")
+                } else {
+                    prefs.customBreakRingtone = uriStr
+                    binding.tvBreakRingtone.text = getString(R.string.label_break_ringtone, "Custom")
+                }
+                ringtoneMgr.previewRingtone(uriStr, true)
+                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +71,43 @@ class SettingsActivity : AppCompatActivity() {
         binding.tvBreakAlertSec.text = getString(R.string.label_break_alert, prefs.breakEndAlertSec)
         binding.rowBreakAlert.setOnClickListener { showNumberPicker("Break End Alert", prefs.breakEndAlertSec, 5, 300) { v -> prefs.breakEndAlertSec = v; binding.tvBreakAlertSec.text = getString(R.string.label_break_alert, v) } }
 
+        val lessonRingName = if (prefs.customLessonRingtone.isNotBlank()) "Custom" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.lessonRingtone }?.second ?: "Ringtone 1"
+        binding.tvLessonRingtone.text = getString(R.string.label_lesson_ringtone, lessonRingName)
+        binding.rowLessonRingtone.setOnClickListener { showRingtonePicker(true) }
+
+        val breakRingName = if (prefs.customBreakRingtone.isNotBlank()) "Custom" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.breakRingtone }?.second ?: "Ringtone 2"
+        binding.tvBreakRingtone.text = getString(R.string.label_break_ringtone, breakRingName)
+        binding.rowBreakRingtone.setOnClickListener { showRingtonePicker(false) }
+
         binding.rowWorkdays.setOnClickListener { showWorkdaysDialog() }
         updateWorkdaysDisplay()
 
         binding.rowHolidays.setOnClickListener { showHolidaysDialog() }
         updateHolidaysDisplay()
+    }
+
+    private fun showRingtonePicker(isLesson: Boolean) {
+        selectingLessonRingtone = isLesson
+        val title = if (isLesson) "Lesson Ringtone" else "Break Ringtone"
+        val items = mutableListOf<String>()
+        RingtoneManager.BUILT_IN_RINGTONES.forEach { (id, name) -> items.add(name) }
+        items.add("From Device")
+        AlertDialog.Builder(this).setTitle(title).setItems(items.toTypedArray()) { _, which ->
+            if (which < RingtoneManager.BUILT_IN_RINGTONES.size) {
+                val (id, name) = RingtoneManager.BUILT_IN_RINGTONES[which]
+                if (isLesson) {
+                    prefs.lessonRingtone = id; prefs.customLessonRingtone = ""
+                    binding.tvLessonRingtone.text = getString(R.string.label_lesson_ringtone, name)
+                } else {
+                    prefs.breakRingtone = id; prefs.customBreakRingtone = ""
+                    binding.tvBreakRingtone.text = getString(R.string.label_break_ringtone, name)
+                }
+                ringtoneMgr.previewRingtone(id, false)
+                Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            } else {
+                try { ringtonePicker.launch(arrayOf("audio/*")) } catch (e: Exception) { Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show() }
+            }
+        }.show()
     }
 
     private fun showOwnerNameDialog() {
