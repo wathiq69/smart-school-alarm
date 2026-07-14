@@ -53,7 +53,7 @@
     </style>
 
     <style name="HeaderSubtitle">
-        <item name="android:textColor">#B3FFFFFF</color>
+        <item name="android:textColor">#B3FFFFFF</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">italic</item>
     </style>
