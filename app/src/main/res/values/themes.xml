@@ -71,7 +71,7 @@
     </style>
 
     <style name="CardButton">
-        <item name="android:background">@drawable/card_button</item>
+        <item name="android:background">@color/card_background</item>
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
