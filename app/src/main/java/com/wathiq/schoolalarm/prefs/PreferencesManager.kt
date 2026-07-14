@@ -68,12 +68,10 @@ class PreferencesManager private constructor(context: Context) {
         set(value) = prefs.edit().putInt(KEY_BREAK_END_ALERT_SEC, value).apply()
 
     var lessonRingtone: String
-        get() = prefs.getString(KEY_LESSON_RINGTONE, "ringtone_1") ?: "ringtone_1"
-        set(value) = prefs.edit().putString(KEY_LESSON_RINGTONE, value).apply()
+        get() = prefs.getString(KEY_LESSON_RINGTONE, "alarm") ?: "alarm"
 
     var breakRingtone: String
-        get() = prefs.getString(KEY_BREAK_RINGTONE, "ringtone_2") ?: "ringtone_2"
-        set(value) = prefs.edit().putString(KEY_BREAK_RINGTONE, value).apply()
+        get() = prefs.getString(KEY_BREAK_RINGTONE, "bell") ?: "bell"
 
     var customLessonRingtone: String
         get() = prefs.getString(KEY_CUSTOM_LESSON_RINGTONE, "") ?: ""
