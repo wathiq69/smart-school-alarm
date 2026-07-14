@@ -5,7 +5,6 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
 import android.media.Ringtone
-import android.media.RingtoneManager
 import android.net.Uri
 import android.util.Log
 import com.wathiq.schoolalarm.prefs.PreferencesManager
@@ -20,11 +19,11 @@ class RingtoneManager private constructor(private val context: Context) {
         }
 
         val GENERATED_TONES = listOf(
-            "alarm" to "صفارة إنذار",
-            "bell" to "جرس مدرسي",
-            "beep" to "نغمات متقطعة",
-            "chime" to "رنين لطيف",
-            "siren" to "صفارة ترددية"
+            "alarm" to "Tone 1",
+            "bell" to "Tone 2",
+            "beep" to "Tone 3",
+            "chime" to "Tone 4",
+            "siren" to "Tone 5"
         )
     }
 
@@ -65,11 +64,11 @@ class RingtoneManager private constructor(private val context: Context) {
     fun getSystemRingtones(): List<Pair<String, String>> {
         val result = mutableListOf<Pair<String, String>>()
         try {
-            val mgr = RingtoneManager(context)
-            mgr.setType(RingtoneManager.TYPE_ALARM)
+            val mgr = android.media.RingtoneManager(context)
+            mgr.setType(android.media.RingtoneManager.TYPE_ALARM)
             val cursor = mgr.cursor
             while (cursor.moveToNext()) {
-                val title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
+                val title = cursor.getString(android.media.RingtoneManager.TITLE_COLUMN_INDEX)
                 val uri = mgr.getRingtoneUri(cursor.position).toString()
                 result.add("system_" + uri to title)
             }
@@ -135,7 +134,7 @@ class RingtoneManager private constructor(private val context: Context) {
     private fun playSystemRingtone(uri: Uri) {
         stop()
         try {
-            ringtone = RingtoneManager.getRingtone(context, uri)
+            ringtone = android.media.RingtoneManager.getRingtone(context, uri)
             ringtone?.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()
             ringtone?.play()
         } catch (e: Exception) { Log.e("RingtoneMgr", "sys error: " + e.message) }
