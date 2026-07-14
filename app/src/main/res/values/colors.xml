@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_cool_start">#A1C4FD</color>
-    <color name="bg_cool_center">#C2E9FB</color>
-    <color name="bg_cool_end">#D4FC79</color>
-    <color name="glass_background">#80FFFFFF</color>
-    <color name="glass_border">#B3FFFFFF</color>
+    <color name="bg_cool_start">#1565C0</color>
+    <color name="bg_cool_center">#1976D2</color>
+    <color name="bg_cool_end">#0D47A1</color>
     
-    <color name="btn_3d_top">#5BC8FF</color>
-    <color name="btn_3d_bottom">#1E90FF</color>
-    <color name="btn_3d_shadow">#0B3D91</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_border">#90CAF9</color>
     
-    <color name="btn_accent_top">#FFD700</color>
-    <color name="btn_accent_bottom">#FF8C00</color>
-    <color name="btn_accent_shadow">#8B4513</color>
+    <color name="primary_text">#0D47A1</color>
+    <color name="secondary_text">#1565C0</color>
+    <color name="dark_text">#1A237E</color>
+    <color name="white_text">#FFFFFF</color>
     
-    <color name="white_text">#1A1A2E</color>
-    <color name="primary_text">#1A1A2E</color>
-    <color name="secondary_text">#2C3E50</color>
+    <color name="btn_3d_top">#42A5F5</color>
+    <color name="btn_3d_bottom">#1976D2</color>
+    <color name="btn_3d_shadow">#0D47A1</color>
     
-    <color name="button_text">#FFFFFF</color>
+    <color name="btn_accent_top">#FFB74D</color>
+    <color name="btn_accent_bottom">#FF6D00</color>
+    <color name="btn_accent_shadow">#E65100</color>
     
-    <color name="neon_blue">#0066CC</color>
-    <color name="neon_green">#008000</color>
-    <color name="neon_orange">#FF6600</color>
+    <color name="clock_color">#0D47A1</color>
+    <color name="remaining_color">#E65100</color>
+    <color name="status_lesson">#2E7D32</color>
+    <color name="status_break">#E65100</color>
+    <color name="status_disabled">#C62828</color>
+    
+    <color name="bottom_bar_bg">#FFFFFF</color>
+    <color name="bottom_bar_icon">#1565C0</color>
+    <color name="bottom_bar_text">#1565C0</color>
 </resources>
