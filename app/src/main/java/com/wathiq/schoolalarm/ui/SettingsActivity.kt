@@ -1,13 +1,10 @@
 package com.wathiq.schoolalarm.ui
 
 import android.app.TimePickerDialog
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.NumberPicker
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.wathiq.schoolalarm.R
@@ -19,27 +16,6 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private val prefs by lazy { PreferencesManager.getInstance(this) }
     private val ringtoneMgr by lazy { RingtoneManager.getInstance(this) }
-    private var selectingLessonRingtone = true
-
-    private val ringtonePicker = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
-        if (uri != null) {
-            try {
-                contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val uriStr = uri.toString()
-                if (selectingLessonRingtone) {
-                    prefs.customLessonRingtone = uriStr
-                    binding.tvLessonRingtone.text = "مخصصة"
-                } else {
-                    prefs.customBreakRingtone = uriStr
-                    binding.tvBreakRingtone.text = "مخصصة"
-                }
-                ringtoneMgr.previewRingtone(uriStr, true)
-                Toast.makeText(this, "تم الحفظ", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,11 +47,11 @@ class SettingsActivity : AppCompatActivity() {
         binding.tvBreakAlertSec.text = prefs.breakEndAlertSec.toString() + " ثانية"
         binding.btnEditBreakAlert.setOnClickListener { showNumberPicker("تنبيه نهاية الفرصة", prefs.breakEndAlertSec, 5, 300) { v -> prefs.breakEndAlertSec = v; binding.tvBreakAlertSec.text = v.toString() + " ثانية" } }
 
-        val lessonRingName = if (prefs.customLessonRingtone.isNotBlank()) "مخصصة" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.lessonRingtone }?.second ?: "نغمة 1"
+        val lessonRingName = RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.lessonRingtone }?.second ?: "صفارة إنذار"
         binding.tvLessonRingtone.text = lessonRingName
         binding.btnEditLessonRingtone.setOnClickListener { showRingtonePicker(true) }
 
-        val breakRingName = if (prefs.customBreakRingtone.isNotBlank()) "مخصصة" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.breakRingtone }?.second ?: "نغمة 2"
+        val breakRingName = RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.breakRingtone }?.second ?: "جرس مدرسي"
         binding.tvBreakRingtone.text = breakRingName
         binding.btnEditBreakRingtone.setOnClickListener { showRingtonePicker(false) }
 
@@ -87,54 +63,38 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun showRingtonePicker(isLesson: Boolean) {
-        selectingLessonRingtone = isLesson
         val title = if (isLesson) "نغمة الحصة" else "نغمة الفرصة"
+        val items = RingtoneManager.BUILT_IN_RINGTONES.map { "▶️ " + it.second }.toTypedArray()
         
-        val items = mutableListOf<String>()
-        RingtoneManager.BUILT_IN_RINGTONES.forEach { (id, name) -> 
-            items.add("▶️ " + name + " (اضغط للتشغيل)")
-        }
-        items.add("📁 اختيار من الجهاز")
-        
-        AlertDialog.Builder(this).setTitle(title).setItems(items.toTypedArray()) { _, which ->
-            if (which < RingtoneManager.BUILT_IN_RINGTONES.size) {
-                val (id, name) = RingtoneManager.BUILT_IN_RINGTONES[which]
-                
-                ringtoneMgr.previewRingtone(id, false)
-                Toast.makeText(this, "▶️ جاري تشغيل: " + name, Toast.LENGTH_SHORT).show()
-                
-                AlertDialog.Builder(this)
-                    .setTitle("النغمة قيد التشغيل")
-                    .setMessage("هل تريد اختيار " + name + "?\n\nالنغمة تعمل الآن. اختر 'نعم' للحفظ أو 'لا' لتجربة نغمة أخرى.")
-                    .setPositiveButton("✓ نعم، اختيار") { _, _ ->
-                        ringtoneMgr.stop()
-                        if (isLesson) {
-                            prefs.lessonRingtone = id
-                            prefs.customLessonRingtone = ""
-                            binding.tvLessonRingtone.text = name
-                        } else {
-                            prefs.breakRingtone = id
-                            prefs.customBreakRingtone = ""
-                            binding.tvBreakRingtone.text = name
-                        }
-                        Toast.makeText(this, "✓ تم الحفظ", Toast.LENGTH_SHORT).show()
+        AlertDialog.Builder(this).setTitle(title).setItems(items) { _, which ->
+            val (id, name) = RingtoneManager.BUILT_IN_RINGTONES[which]
+            
+            ringtoneMgr.previewRingtone(id)
+            Toast.makeText(this, "▶️ جاري تشغيل: $name", Toast.LENGTH_SHORT).show()
+            
+            AlertDialog.Builder(this)
+                .setTitle("النغمة قيد التشغيل")
+                .setMessage("هل تريد اختيار $name?\n\nاختر 'نعم' للحفظ أو 'لا' لتجربة نغمة أخرى.")
+                .setPositiveButton("✓ نعم، اختيار") { _, _ ->
+                    ringtoneMgr.stop()
+                    if (isLesson) {
+                        prefs.lessonRingtone = id
+                        binding.tvLessonRingtone.text = name
+                    } else {
+                        prefs.breakRingtone = id
+                        binding.tvBreakRingtone.text = name
                     }
-                    .setNegativeButton("▶️ تجربة أخرى") { _, _ ->
-                        ringtoneMgr.stop()
-                        showRingtonePicker(isLesson)
-                    }
-                    .setNeutralButton("⏹ إيقاف") { _, _ ->
-                        ringtoneMgr.stop()
-                    }
-                    .setOnCancelListener { ringtoneMgr.stop() }
-                    .show()
-            } else {
-                try { 
-                    ringtonePicker.launch(arrayOf("audio/*")) 
-                } catch (e: Exception) { 
-                    Toast.makeText(this, "تعذر فتح الملفات", Toast.LENGTH_SHORT).show() 
+                    Toast.makeText(this, "✓ تم الحفظ", Toast.LENGTH_SHORT).show()
                 }
-            }
+                .setNegativeButton("▶️ تجربة أخرى") { _, _ ->
+                    ringtoneMgr.stop()
+                    showRingtonePicker(isLesson)
+                }
+                .setNeutralButton("⏹ إيقاف") { _, _ ->
+                    ringtoneMgr.stop()
+                }
+                .setOnCancelListener { ringtoneMgr.stop() }
+                .show()
         }.show()
     }
 
@@ -191,7 +151,7 @@ class SettingsActivity : AppCompatActivity() {
         } else {
             AlertDialog.Builder(this).setTitle("الأعياد").setItems(holidays.toTypedArray()) { _, which ->
                 val date = holidays[which]
-                AlertDialog.Builder(this).setTitle("حذف العيد؟").setMessage("حذف " + date + "?")
+                AlertDialog.Builder(this).setTitle("حذف العيد؟").setMessage("حذف $date?")
                     .setPositiveButton("حذف") { _, _ -> prefs.removeHoliday(date); updateHolidaysDisplay(); Toast.makeText(this, "تم الحذف", Toast.LENGTH_SHORT).show() }
                     .setNegativeButton("إلغاء", null).show()
             }.setPositiveButton("إضافة") { _, _ -> showAddHolidayDialog() }.setNegativeButton("إغلاق", null).show()
