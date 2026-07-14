@@ -6,30 +6,34 @@
     android:background="@drawable/bg_cool_gradient"
     android:fitsSystemWindows="true">
 
-    <!-- Header -->
+    <!-- Header (أزرق متدرج) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="24dp"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            style="@style/HeaderTitle" />
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_subtitle"
-            style="@style/HeaderSubtitle"
-            android:layout_marginTop="4dp" />
+            android:textColor="#0066CC"
+            android:textSize="14sp"
+            android:textStyle="bold|italic"
+            android:layout_marginTop="6dp" />
 
     </LinearLayout>
 
-    <!-- Main Content -->
+    <!-- المحتوى الرئيسي -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,56 +47,63 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Clock Card -->
+            <!-- بطاقة الساعة (بيضاء بحدود) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/card_background"
+                android:background="#FFFFFF"
                 android:gravity="center"
                 android:layout_marginBottom="12dp"
-                android:padding="16dp">
+                android:padding="24dp">
 
                 <TextView
                     android:id="@+id/tvClock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="00:00:00"
-                    style="@style/ClockText" />
+                    android:textColor="#0D47A1"
+                    android:textSize="48sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    style="@style/CardLabelText"
-                    android:layout_marginTop="4dp" />
+                    android:textColor="#757575"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp" />
 
             </LinearLayout>
 
-            <!-- Status Card -->
+            <!-- بطاقة الحالة (بيضاء) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/card_background"
+                android:background="#FFFFFF"
                 android:gravity="center"
                 android:layout_marginBottom="12dp"
-                android:padding="16dp">
+                android:padding="24dp">
 
                 <TextView
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="جاري التحميل..."
-                    style="@style/StatusText" />
+                    android:textColor="#0D47A1"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvRemaining"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="--:--"
-                    style="@style/RemainingText"
+                    android:textColor="#E65100"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
                     android:layout_marginTop="8dp" />
 
                 <TextView
@@ -100,7 +111,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/remaining_label"
-                    style="@style/CardLabelText"
+                    android:textColor="#757575"
+                    android:textSize="14sp"
                     android:layout_marginTop="4dp" />
 
                 <TextView
@@ -108,18 +120,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    style="@style/CardValueText"
+                    android:textColor="#1A237E"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:layout_marginTop="8dp"
                     android:visibility="gone" />
 
             </LinearLayout>
 
-            <!-- Today Schedule -->
+            <!-- بطاقة جدول اليوم (بيضاء) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/card_background"
+                android:background="#FFFFFF"
                 android:layout_marginBottom="12dp"
                 android:padding="16dp">
 
@@ -127,7 +141,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="جدول اليوم"
-                    style="@style/CardTitleText"
+                    android:textColor="#0D47A1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <HorizontalScrollView
@@ -148,12 +164,12 @@
 
     </ScrollView>
 
-    <!-- Bottom Bar -->
+    <!-- شريط سفلي (أبيض) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/bottom_bar_bg"
+        android:background="#FFFFFF"
         android:padding="8dp"
         android:gravity="center">
 
@@ -163,7 +179,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_schedule"
-            style="@style/CardButton"
+            android:textColor="#0D47A1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="?android:attr/selectableItemBackground"
             android:drawableTop="@android:drawable/ic_menu_agenda"
             android:layout_marginEnd="4dp" />
 
@@ -173,7 +192,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_test_sound"
-            style="@style/CardButton"
+            android:textColor="#0D47A1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="?android:attr/selectableItemBackground"
             android:drawableTop="@android:drawable/ic_media_play"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp" />
@@ -184,7 +206,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_pause_today"
-            style="@style/CardButton"
+            android:textColor="#0D47A1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="?android:attr/selectableItemBackground"
             android:drawableTop="@android:drawable/ic_media_pause"
             android:layout_marginStart="4dp" />
 
@@ -192,7 +217,7 @@
             android:id="@+id/btnSettings"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@color/card_background"
+            android:background="?android:attr/selectableItemBackground"
             android:src="@android:drawable/ic_menu_preferences"
             android:layout_marginStart="4dp" />
 
