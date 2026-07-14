@@ -28,14 +28,12 @@ class SettingsActivity : AppCompatActivity() {
                 val uriStr = uri.toString()
                 if (selectingLessonRingtone) {
                     prefs.customLessonRingtone = uriStr
-                    prefs.lessonRingtone = ""
                     binding.tvLessonRingtone.text = "مخصصة"
                 } else {
                     prefs.customBreakRingtone = uriStr
-                    prefs.breakRingtone = ""
                     binding.tvBreakRingtone.text = "مخصصة"
                 }
-                ringtoneMgr.playRingtoneByUri(uri)
+                ringtoneMgr.previewRingtone(uriStr, true)
                 Toast.makeText(this, "تم الحفظ", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
@@ -73,11 +71,13 @@ class SettingsActivity : AppCompatActivity() {
         binding.tvBreakAlertSec.text = prefs.breakEndAlertSec.toString() + " ثانية"
         binding.btnEditBreakAlert.setOnClickListener { showNumberPicker("تنبيه نهاية الفرصة", prefs.breakEndAlertSec, 5, 300) { v -> prefs.breakEndAlertSec = v; binding.tvBreakAlertSec.text = v.toString() + " ثانية" } }
 
+        val lessonRingName = if (prefs.customLessonRingtone.isNotBlank()) "مخصصة" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.lessonRingtone }?.second ?: "نغمة 1"
+        binding.tvLessonRingtone.text = lessonRingName
         binding.btnEditLessonRingtone.setOnClickListener { showRingtonePicker(true) }
-        updateRingtoneDisplay(true)
-        
+
+        val breakRingName = if (prefs.customBreakRingtone.isNotBlank()) "مخصصة" else RingtoneManager.BUILT_IN_RINGTONES.firstOrNull { it.first == prefs.breakRingtone }?.second ?: "نغمة 2"
+        binding.tvBreakRingtone.text = breakRingName
         binding.btnEditBreakRingtone.setOnClickListener { showRingtonePicker(false) }
-        updateRingtoneDisplay(false)
 
         binding.btnEditWorkdays.setOnClickListener { showWorkdaysDialog() }
         updateWorkdaysDisplay()
@@ -86,52 +86,34 @@ class SettingsActivity : AppCompatActivity() {
         updateHolidaysDisplay()
     }
 
-    private fun updateRingtoneDisplay(isLesson: Boolean) {
-        val uriStr = if (isLesson) prefs.customLessonRingtone.ifBlank { prefs.lessonRingtone } else prefs.customBreakRingtone.ifBlank { prefs.breakRingtone }
-        if (uriStr.isBlank()) {
-            if (isLesson) binding.tvLessonRingtone.text = "الافتراضية"
-            else binding.tvBreakRingtone.text = "الافتراضية"
-            return
-        }
-        val uri = Uri.parse(uriStr)
-        val title = ringtoneMgr.getRingtoneTitle(uri)
-        if (isLesson) binding.tvLessonRingtone.text = title
-        else binding.tvBreakRingtone.text = title
-    }
-
     private fun showRingtonePicker(isLesson: Boolean) {
         selectingLessonRingtone = isLesson
         val title = if (isLesson) "نغمة الحصة" else "نغمة الفرصة"
         
-        val ringtones = ringtoneMgr.getSystemRingtones().toMutableList()
-        ringtones.add("📁 اختيار ملف من الجهاز" to Uri.EMPTY)
-        val items = ringtones.map { it.first }.toTypedArray()
+        val items = mutableListOf<String>()
+        RingtoneManager.BUILT_IN_RINGTONES.forEach { (id, name) -> 
+            items.add("▶️ " + name + " (اضغط للتشغيل)")
+        }
+        items.add("📁 اختيار من الجهاز")
         
-        AlertDialog.Builder(this).setTitle(title).setItems(items) { _, which ->
-            if (which == ringtones.size - 1) {
-                try { 
-                    ringtonePicker.launch(arrayOf("audio/*")) 
-                } catch (e: Exception) { 
-                    Toast.makeText(this, "تعذر فتح الملفات", Toast.LENGTH_SHORT).show() 
-                }
-            } else {
-                val (name, uri) = ringtones[which]
+        AlertDialog.Builder(this).setTitle(title).setItems(items.toTypedArray()) { _, which ->
+            if (which < RingtoneManager.BUILT_IN_RINGTONES.size) {
+                val (id, name) = RingtoneManager.BUILT_IN_RINGTONES[which]
                 
-                ringtoneMgr.playRingtoneByUri(uri)
-                Toast.makeText(this, "▶️ جاري تشغيل: $name", Toast.LENGTH_SHORT).show()
+                ringtoneMgr.previewRingtone(id, false)
+                Toast.makeText(this, "▶️ جاري تشغيل: " + name, Toast.LENGTH_SHORT).show()
                 
                 AlertDialog.Builder(this)
                     .setTitle("النغمة قيد التشغيل")
-                    .setMessage("هل تريد اختيار $name?\n\nاختر 'نعم' للحفظ أو 'لا' لتجربة نغمة أخرى.")
+                    .setMessage("هل تريد اختيار " + name + "?\n\nالنغمة تعمل الآن. اختر 'نعم' للحفظ أو 'لا' لتجربة نغمة أخرى.")
                     .setPositiveButton("✓ نعم، اختيار") { _, _ ->
                         ringtoneMgr.stop()
-                        val uriStr = uri.toString()
                         if (isLesson) {
-                            prefs.lessonRingtone = uriStr
+                            prefs.lessonRingtone = id
                             prefs.customLessonRingtone = ""
                             binding.tvLessonRingtone.text = name
                         } else {
-                            prefs.breakRingtone = uriStr
+                            prefs.breakRingtone = id
                             prefs.customBreakRingtone = ""
                             binding.tvBreakRingtone.text = name
                         }
@@ -146,6 +128,12 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     .setOnCancelListener { ringtoneMgr.stop() }
                     .show()
+            } else {
+                try { 
+                    ringtonePicker.launch(arrayOf("audio/*")) 
+                } catch (e: Exception) { 
+                    Toast.makeText(this, "تعذر فتح الملفات", Toast.LENGTH_SHORT).show() 
+                }
             }
         }.show()
     }
