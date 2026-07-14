@@ -1,74 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_cool_gradient"
     android:fitsSystemWindows="true">
 
-    <View
+    <!-- Header -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_cool_gradient" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            style="@style/HeaderTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_subtitle"
+            style="@style/HeaderSubtitle"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+    <!-- Main Content -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="40dp"
-        android:paddingBottom="16dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        style="@style/GlassTitleText"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_subtitle"
-                        android:textColor="#0066CC"
-                        android:textSize="14sp"
-                        android:textStyle="bold|italic" />
-
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/btnSettings"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/glass_card"
-                    android:src="@android:drawable/ic_menu_preferences"
-                    android:contentDescription="settings" />
-
-            </LinearLayout>
-
+            <!-- Clock Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/glass_card"
+                android:background="@drawable/card_bg"
                 android:gravity="center"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="12dp">
 
                 <TextView
                     android:id="@+id/tvClock"
@@ -82,120 +64,80 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    style="@style/GlassBodyText"
-                    android:layout_marginTop="8dp" />
+                    style="@style/CardLabelText"
+                    android:layout_marginTop="4dp" />
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="#30FFFFFF"
-                app:cardCornerRadius="28dp"
-                app:cardElevation="0dp"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:id="@+id/tvStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="جاري التحميل..."
-                        style="@style/GlassTitleText"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/tvRemaining"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="--:--"
-                        style="@style/RemainingText"
-                        android:layout_marginTop="12dp" />
-
-                    <TextView
-                        android:id="@+id/tvRemainingLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/remaining_label"
-                        style="@style/GlassBodyText"
-                    android:layout_marginTop="4dp" />
-
-                    <TextView
-                        android:id="@+id/tvLessonInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        style="@style/GlassBodyText"
-                        android:layout_marginTop="8dp"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <Button
-                android:id="@+id/btnSchedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_schedule"
-                style="@style/Button3D"
-                android:layout_marginBottom="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="جدول اليوم"
-                style="@style/GlassTitleText"
-                android:textSize="16sp"
-                android:layout_marginBottom="8dp" />
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
-
-                <TableLayout
-                    android:id="@+id/todayScheduleTable"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:stretchColumns="*"
-                    android:background="@drawable/glass_card"
-                    android:padding="4dp" />
-
-            </HorizontalScrollView>
-
+            <!-- Status Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:orientation="vertical"
+                android:background="@drawable/card_bg"
+                android:gravity="center"
+                android:layout_marginBottom="12dp">
 
-                <Button
-                    android:id="@+id/btnTestSound"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/btn_test_sound"
-                    style="@style/Button3D" />
+                    android:text="جاري التحميل..."
+                    style="@style/StatusText" />
 
-                <View android:layout_width="8dp" android:layout_height="0dp" />
-
-                <Button
-                    android:id="@+id/btnPauseToday"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvRemaining"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/btn_pause_today"
-                    style="@style/Button3D"
-                    android:background="@drawable/btn_3d_accent" />
+                    android:text="--:--"
+                    style="@style/RemainingText"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/tvRemainingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/remaining_label"
+                    style="@style/CardLabelText"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/tvLessonInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    style="@style/CardValueText"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!-- Today Schedule -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_bg"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="جدول اليوم"
+                    style="@style/CardTitleText"
+                    android:layout_marginBottom="8dp" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableLayout
+                        android:id="@+id/todayScheduleTable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:stretchColumns="*" />
+
+                </HorizontalScrollView>
 
             </LinearLayout>
 
@@ -203,4 +145,54 @@
 
     </ScrollView>
 
-</FrameLayout>
+    <!-- Bottom Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/bottom_bar_bg"
+        android:padding="8dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnSchedule"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_schedule"
+            style="@style/CardButton"
+            android:drawableTop="@android:drawable/ic_menu_agenda"
+            android:layout_marginEnd="4dp" />
+
+        <Button
+            android:id="@+id/btnTestSound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_test_sound"
+            style="@style/CardButton"
+            android:drawableTop="@android:drawable/ic_media_play"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp" />
+
+        <Button
+            android:id="@+id/btnPauseToday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_pause_today"
+            style="@style/CardButton"
+            android:drawableTop="@android:drawable/ic_media_pause"
+            android:layout_marginStart="4dp" />
+
+        <ImageButton
+            android:id="@+id/btnSettings"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/card_button"
+            android:src="@android:drawable/ic_menu_preferences"
+            android:layout_marginStart="4dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
