@@ -18,7 +18,6 @@ class RingtoneManager private constructor(private val context: Context) {
 
     private var ringtone: Ringtone? = null
 
-    // جلب كل نغمات الهاتف (منبهات + إشعارات)
     fun getSystemRingtones(): List<Pair<String, Uri>> {
         val ringtones = mutableListOf<Pair<String, Uri>>()
         try {
