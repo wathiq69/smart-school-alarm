@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,64 +36,402 @@
                 style="@style/GlassTitleText"
                 android:gravity="center"
                 android:layout_marginStart="8dp" />
-
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowOwnerName" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvOwnerName" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Owner Name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="الاسم"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvOwnerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowSchoolStart" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvSchoolStart" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- School Start -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="بداية الدوام"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvSchoolStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowLessonDuration" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvLessonDuration" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Lesson Duration -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="طول الحصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvLessonDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditLessonDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowBreakDuration" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvBreakDuration" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Break Duration -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="طول الفرصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvBreakDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditBreakDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowLessonCount" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvLessonCount" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Lesson Count -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="عدد الحصص"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvLessonCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditLessonCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowLessonAlert" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvLessonAlertSec" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Lesson Alert -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تنبيه نهاية الحصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvLessonAlertSec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditLessonAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowBreakAlert" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvBreakAlertSec" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Break Alert -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="تنبيه نهاية الفرصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvBreakAlertSec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditBreakAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowLessonRingtone" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvLessonRingtone" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Lesson Ringtone -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="نغمة الحصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvLessonRingtone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditLessonRingtone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowBreakRingtone" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvBreakRingtone" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Break Ringtone -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="نغمة الفرصة"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvBreakRingtone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditBreakRingtone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowWorkdays" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:layout_marginBottom="10dp" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvWorkdays" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Workdays -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="أيام العمل"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvWorkdays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditWorkdays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
-        <LinearLayout android:id="@+id/rowHolidays" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="16dp" android:background="@drawable/glass_card" android:clickable="true" android:focusable="true">
-            <TextView android:id="@+id/tvHolidays" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" style="@style/GlassBodyText" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=">" android:textColor="@color/white_text" android:textSize="20sp" android:layout_marginStart="8dp" />
+        <!-- Holidays -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/glass_card">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="الأعياد والعطل"
+                    style="@style/GlassBodyText"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvHolidays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/GlassBodyText"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnEditHolidays"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_edit"
+                style="@style/Button3D" />
         </LinearLayout>
 
     </LinearLayout>
-
 </ScrollView>
