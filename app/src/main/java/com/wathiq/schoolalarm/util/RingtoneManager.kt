@@ -77,17 +77,9 @@ class RingtoneManager private constructor(private val context: Context) {
         return result
     }
 
-    fun previewGenerated(type: String) {
-        playGenerated(type)
-    }
-
-    fun previewSystem(uriStr: String) {
-        playSystemRingtone(Uri.parse(uriStr))
-    }
-
-    fun previewCustom(uriStr: String) {
-        playSystemRingtone(Uri.parse(uriStr))
-    }
+    fun previewGenerated(type: String) { playGenerated(type) }
+    fun previewSystem(uriStr: String) { playSystemRingtone(Uri.parse(uriStr)) }
+    fun previewCustom(uriStr: String) { playSystemRingtone(Uri.parse(uriStr)) }
 
     private fun playGenerated(type: String) {
         stop()
