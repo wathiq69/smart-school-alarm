@@ -3,30 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/tvDialogDayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="طھط¹ط¯ظٹظ„"
+            android:text="تعديل"
             style="@style/GlassTitleText"
             android:textSize="20sp"
             android:layout_marginBottom="16dp"
             android:layout_gravity="center" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 1" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" android:layout_marginBottom="8dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 2" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et2" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" android:layout_marginBottom="8dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 3" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et3" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" android:layout_marginBottom="8dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 4" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et4" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" android:layout_marginBottom="8dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 5" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et5" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" android:layout_marginBottom="8dp" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ط§ظ„ط­طµط© 6" style="@style/GlassBodyText" />
-        <EditText android:id="@+id/et6" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/white_text" android:textColorHint="#80FFFFFF" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 1" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et1" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 2" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et2" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 3" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et3" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 4" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et4" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 5" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et5" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" android:layout_marginBottom="8dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="الحصة 6" style="@style/GlassBodyText" />
+        <EditText android:id="@+id/et6" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/hint_lesson" android:textColor="@color/primary_text" android:textColorHint="#80000000" />
     </LinearLayout>
 </ScrollView>
