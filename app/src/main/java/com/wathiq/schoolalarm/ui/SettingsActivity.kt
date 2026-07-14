@@ -115,11 +115,11 @@ class SettingsActivity : AppCompatActivity() {
             when (type) {
                 "gen" -> {
                     ringtoneMgr.previewGenerated(id)
-                    askSelect(isLesson, id, name, false)
+                    askSelect(isLesson, id, name)
                 }
                 "sys" -> {
                     ringtoneMgr.previewSystem(id.removePrefix("system_"))
-                    askSelect(isLesson, id, name, false)
+                    askSelect(isLesson, id, name)
                 }
                 "file" -> {
                     try { filePicker.launch(arrayOf("audio/*")) } catch (e: Exception) {}
@@ -128,7 +128,7 @@ class SettingsActivity : AppCompatActivity() {
         }.show()
     }
 
-    private fun askSelect(isLesson: Boolean, id: String, name: String, isCustom: Boolean) {
+    private fun askSelect(isLesson: Boolean, id: String, name: String) {
         Toast.makeText(this, "▶️ جاري التشغيل: $name", Toast.LENGTH_SHORT).show()
         AlertDialog.Builder(this)
             .setTitle("النغمة قيد التشغيل")
