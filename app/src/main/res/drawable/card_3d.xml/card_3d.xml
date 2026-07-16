@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- ظل سفلي (محاكاة 3D) -->
-    <item android:top="4dp" android:left="2dp" android:right="2dp">
+    <!-- ظل سفلي عميق -->
+    <item android:top="6dp" android:left="3dp" android:right="3dp">
         <shape android:shape="rectangle">
-            <solid android:color="#10000000" />
-            <corners android:radius="24dp" />
+            <solid android:color="#1A000000" />
+            <corners android:radius="28dp" />
         </shape>
     </item>
-    <!-- ظل ثاني (أعمق) -->
-    <item android:top="2dp" android:left="1dp" android:right="1dp">
+    <!-- ظل متوسط -->
+    <item android:top="3dp" android:left="2dp" android:right="2dp">
         <shape android:shape="rectangle">
-            <solid android:color="#20000000" />
-            <corners android:radius="24dp" />
+            <solid android:color="#33000000" />
+            <corners android:radius="28dp" />
         </shape>
     </item>
     <!-- البطاقة البيضاء المقوسة -->
-    <item android:bottom="4dp" android:left="1dp" android:right="1dp">
+    <item android:bottom="6dp" android:left="1dp" android:right="1dp">
         <shape android:shape="rectangle">
             <solid android:color="#FFFFFF" />
-            <corners android:radius="24dp" />
-            <stroke android:width="1dp" android:color="#E0E0E0" />
+            <corners android:radius="28dp" />
+            <stroke android:width="1.5dp" android:color="#E3F2FD" />
         </shape>
     </item>
 </layer-list>
