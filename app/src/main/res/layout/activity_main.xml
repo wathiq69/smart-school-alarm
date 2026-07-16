@@ -43,40 +43,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Clock Card (3D مقوسة) -->
+            <!-- Clock Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/card_3d"
+                android:background="@color/card_background"
                 android:gravity="center"
                 android:layout_marginBottom="16dp"
                 android:padding="24dp"
-                android:elevation="8dp">
+                android:elevation="8dp" />
 
-                <TextView
-                    android:id="@+id/tvClock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    style="@style/ClockText" />
-
-                <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    style="@style/CardLabelText"
-                    android:layout_marginTop="4dp" />
-
-            </LinearLayout>
-
-            <!-- Status Card (3D مقوسة) -->
+            <!-- Status Card -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/card_3d"
+                android:background="@color/card_background"
                 android:gravity="center"
                 android:layout_marginBottom="16dp"
                 android:padding="24dp"
@@ -116,12 +99,12 @@
 
             </LinearLayout>
 
-            <!-- Today Schedule (3D مقوسة) -->
+            <!-- Today Schedule -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/card_3d"
+                android:background="@color/card_background"
                 android:layout_marginBottom="16dp"
                 android:padding="16dp"
                 android:elevation="8dp">
