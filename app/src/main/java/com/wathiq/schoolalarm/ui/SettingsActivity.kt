@@ -14,10 +14,10 @@ class SettingsActivity : AppCompatActivity() {
     private val alarmPlayer by lazy { SchoolAlarmPlayer.getInstance(this) }
     private lateinit var prefs: PreferencesManager
 
-    private lateinit var spinnerLesson: Spinner
-    private lateinit var spinnerBreak: Spinner
-    private lateinit var btnSave: Button
-    private lateinit var btnStop: Button
+    private var spinnerLesson: Spinner? = null
+    private var spinnerBreak: Spinner? = null
+    private var btnSave: Button? = null
+    private var btnStop: Button? = null
 
     private val toneList = mutableListOf<Pair<String, String>>()
 
@@ -27,23 +27,36 @@ class SettingsActivity : AppCompatActivity() {
 
         prefs = PreferencesManager.getInstance(this)
 
-        spinnerLesson = findViewById(R.id.spinner_lesson_tone)
-        spinnerBreak = findViewById(R.id.spinner_break_tone)
-        btnSave = findViewById(R.id.btn_save_settings)
-        btnStop = findViewById(R.id.btn_stop_preview)
+        // جلب العناصر بشكل آمن لتجنب الانهيار في حال اختلاف الـ ID بملف الـ XML
+        spinnerLesson = findViewById(resources.getIdentifier("spinner_lesson_tone", "id", packageName))
+            ?: findViewById(resources.getIdentifier("spinnerLesson", "id", packageName))
+        
+        spinnerBreak = findViewById(resources.getIdentifier("spinner_break_tone", "id", packageName))
+            ?: findViewById(resources.getIdentifier("spinnerBreak", "id", packageName))
+        
+        btnSave = findViewById(resources.getIdentifier("btn_save_settings", "id", packageName))
+            ?: findViewById(resources.getIdentifier("btnSave", "id", packageName))
+        
+        btnStop = findViewById(resources.getIdentifier("btn_stop_preview", "id", packageName))
+            ?: findViewById(resources.getIdentifier("btnStop", "id", packageName))
 
         setupTonesSection()
 
-        btnSave.setOnClickListener {
-            val selectedLesson = toneList[spinnerLesson.selectedItemPosition].first
-            val selectedBreak = toneList[spinnerBreak.selectedItemPosition].first
+        btnSave?.setOnClickListener {
+            val lessonPos = spinnerLesson?.selectedItemPosition ?: 0
+            val breakPos = spinnerBreak?.selectedItemPosition ?: 0
             
-            prefs.lessonRingtone = selectedLesson
-            prefs.breakRingtone = selectedBreak
+            if (lessonPos < toneList.size && breakPos < toneList.size) {
+                val selectedLesson = toneList[lessonPos].first
+                val selectedBreak = toneList[breakPos].first
+                
+                prefs.lessonRingtone = selectedLesson
+                prefs.breakRingtone = selectedBreak
+            }
             finish()
         }
 
-        btnStop.setOnClickListener {
+        btnStop?.setOnClickListener {
             alarmPlayer.stop()
         }
     }
@@ -51,12 +64,10 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupTonesSection() {
         toneList.clear()
         
-        // 1. إضافة النغمات المولدة داخلياً
         SchoolAlarmPlayer.GENERATED_TONES.forEach { tone: Pair<String, String> ->
             toneList.add(tone)
         }
 
-        // 2. إضافة نغمات النظام بشكل آمن
         val systemTones = alarmPlayer.getSystemRingtones()
         systemTones.forEach { tone: Pair<String, String> ->
             toneList.add(tone)
@@ -69,18 +80,17 @@ class SettingsActivity : AppCompatActivity() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        spinnerLesson.adapter = adapter
-        spinnerBreak.adapter = adapter
+        spinnerLesson?.adapter = adapter
+        spinnerBreak?.adapter = adapter
 
-        // تحديد النغمات المحفوظة مسبقاً داخل السبرينر
         val currentLesson = prefs.lessonRingtone
         val currentBreak = prefs.breakRingtone
 
         val lessonIndex = toneList.indexOfFirst { it.first == currentLesson }
-        if (lessonIndex != -1) spinnerLesson.setSelection(lessonIndex)
+        if (lessonIndex != -1) spinnerLesson?.setSelection(lessonIndex)
 
         val breakIndex = toneList.indexOfFirst { it.first == currentBreak }
-        if (breakIndex != -1) spinnerBreak.setSelection(breakIndex)
+        if (breakIndex != -1) spinnerBreak?.setSelection(breakIndex)
     }
 
     override fun onPause() {
