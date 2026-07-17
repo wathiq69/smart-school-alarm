@@ -27,7 +27,6 @@ class SettingsActivity : AppCompatActivity() {
 
         prefs = PreferencesManager.getInstance(this)
 
-        // جلب العناصر بشكل آمن لتجنب الانهيار في حال اختلاف الـ ID بملف الـ XML
         spinnerLesson = findViewById(resources.getIdentifier("spinner_lesson_tone", "id", packageName))
             ?: findViewById(resources.getIdentifier("spinnerLesson", "id", packageName))
         
