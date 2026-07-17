@@ -5,6 +5,7 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
 import android.media.Ringtone
+import android.media.RingtoneManager
 import android.net.Uri
 import android.util.Log
 import com.wathiq.schoolalarm.prefs.PreferencesManager
@@ -33,42 +34,32 @@ class RingtoneManager private constructor(private val context: Context) {
 
     fun playLessonRingtone() {
         val prefs = PreferencesManager.getInstance(context)
-        val custom = prefs.customLessonRingtone
-        if (custom.isNotBlank()) {
-            playSystemRingtone(Uri.parse(custom))
+        val type = prefs.lessonRingtone
+        if (type.startsWith("system_")) {
+            playSystemRingtone(Uri.parse(type.removePrefix("system_")))
         } else {
-            val type = prefs.lessonRingtone
-            if (type.startsWith("system_")) {
-                playSystemRingtone(Uri.parse(type.removePrefix("system_")))
-            } else {
-                playGenerated(type)
-            }
+            playGenerated(type)
         }
     }
 
     fun playBreakRingtone() {
         val prefs = PreferencesManager.getInstance(context)
-        val custom = prefs.customBreakRingtone
-        if (custom.isNotBlank()) {
-            playSystemRingtone(Uri.parse(custom))
+        val type = prefs.breakRingtone
+        if (type.startsWith("system_")) {
+            playSystemRingtone(Uri.parse(type.removePrefix("system_")))
         } else {
-            val type = prefs.breakRingtone
-            if (type.startsWith("system_")) {
-                playSystemRingtone(Uri.parse(type.removePrefix("system_")))
-            } else {
-                playGenerated(type)
-            }
+            playGenerated(type)
         }
     }
 
     fun getSystemRingtones(): List<Pair<String, String>> {
         val result = mutableListOf<Pair<String, String>>()
         try {
-            val mgr = android.media.RingtoneManager(context)
-            mgr.setType(android.media.RingtoneManager.TYPE_ALARM)
+            val mgr = RingtoneManager(context)
+            mgr.setType(RingtoneManager.TYPE_ALARM)
             val cursor = mgr.cursor
             while (cursor.moveToNext()) {
-                val title = cursor.getString(android.media.RingtoneManager.TITLE_COLUMN_INDEX)
+                val title = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX)
                 val uri = mgr.getRingtoneUri(cursor.position).toString()
                 result.add("system_" + uri to title)
             }
@@ -78,7 +69,6 @@ class RingtoneManager private constructor(private val context: Context) {
 
     fun previewGenerated(type: String) { playGenerated(type) }
     fun previewSystem(uriStr: String) { playSystemRingtone(Uri.parse(uriStr)) }
-    fun previewCustom(uriStr: String) { playSystemRingtone(Uri.parse(uriStr)) }
 
     private fun playGenerated(type: String) {
         stop()
@@ -134,7 +124,7 @@ class RingtoneManager private constructor(private val context: Context) {
     private fun playSystemRingtone(uri: Uri) {
         stop()
         try {
-            ringtone = android.media.RingtoneManager.getRingtone(context, uri)
+            ringtone = RingtoneManager.getRingtone(context, uri)
             ringtone?.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()
             ringtone?.play()
         } catch (e: Exception) { Log.e("RingtoneMgr", "sys error: " + e.message) }
