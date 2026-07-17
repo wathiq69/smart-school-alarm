@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val updateRunnable = object : Runnable {
-        override fun run() { updateClock(); updateScheduleStatus(); handler.postDelayed(this, 1000) }
+        override fun run() { updateScheduleStatus(); handler.postDelayed(this, 1000) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,20 +61,32 @@ class MainActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         binding.btnSchedule.setOnClickListener { startActivity(Intent(this, ScheduleActivity::class.java)) }
         binding.btnSettings.setOnClickListener { startActivity(Intent(this, SettingsActivity::class.java)) }
-        binding.btnTestSound.setOnClickListener {
-            val intent = Intent(this, ScheduleMonitorService::class.java).apply { action = ScheduleMonitorService.ACTION_SPEAK_WELCOME }
-            ContextCompat.startForegroundService(this, intent)
-            Toast.makeText(this, "جاري اختبار الصوت", Toast.LENGTH_SHORT).show()
+        
+        binding.btnMute.setOnClickListener {
+            prefs.muted = !prefs.muted
+            updateMuteButton()
+            Toast.makeText(this, if (prefs.muted) "تم كتم التنبيهات" else "تم تشغيل التنبيهات", Toast.LENGTH_SHORT).show()
         }
+
         binding.btnPauseToday.setOnClickListener {
             prefs.pauseToday = !prefs.pauseToday
-            val msg = if (prefs.pauseToday) "تم إيقاف التطبيق اليوم" else "تم تفعيل التطبيق اليوم"
+            val msg = if (prefs.pauseToday) "تم تفعيل عطلة اليوم" else "تم إلغاء عطلة اليوم"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             updatePauseButton()
         }
     }
 
-    private fun updatePauseButton() { binding.btnPauseToday.text = if (prefs.pauseToday) "تفعيل اليوم" else "إيقاف اليوم" }
+    private fun updateMuteButton() {
+        if (prefs.muted) {
+            binding.btnMute.text = "تشغيل"
+            binding.btnMute.setCompoundDrawablesWithIntrinsicBounds(0, android.R.drawable.ic_lock_silent_mode, 0, 0)
+        } else {
+            binding.btnMute.text = "كتم"
+            binding.btnMute.setCompoundDrawablesWithIntrinsicBounds(0, android.R.drawable.ic_lock_silent_mode_off, 0, 0)
+        }
+    }
+
+    private fun updatePauseButton() { binding.btnPauseToday.text = if (prefs.pauseToday) "إلغاء العطلة" else "عطلة اليوم" }
 
     private fun checkAndRequestPermissions() {
         val needed = mutableListOf<String>()
@@ -95,22 +107,11 @@ class MainActivity : AppCompatActivity() {
         ContextCompat.startForegroundService(this, intent)
     }
 
-    private fun updateClock() {
-        val cal = Calendar.getInstance()
-        var h12 = cal.get(Calendar.HOUR)
-        if (h12 == 0) h12 = 12
-        val m = cal.get(Calendar.MINUTE)
-        val s = cal.get(Calendar.SECOND)
-        val amPm = if (cal.get(Calendar.AM_PM) == Calendar.AM) "ص" else "م"
-        binding.tvClock.text = String.format("%02d:%02d:%02d %s", h12, m, s, amPm)
-        val dayNames = arrayOf("الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت")
-        val monthNames = arrayOf("يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر")
-        binding.tvDate.text = dayNames[cal.get(Calendar.DAY_OF_WEEK) - 1] + "، " + cal.get(Calendar.DAY_OF_MONTH) + " " + monthNames[cal.get(Calendar.MONTH)] + " " + cal.get(Calendar.YEAR)
-    }
-
     private fun updateScheduleStatus() {
         val state = ScheduleCalculator.getCurrentState(prefs)
         updatePauseButton()
+        updateMuteButton()
+        
         when (state.type) {
             PeriodType.LESSON -> {
                 val lessonNum = state.lessonNumber ?: 1
@@ -155,22 +156,17 @@ class MainActivity : AppCompatActivity() {
         table.layoutDirection = View.LAYOUT_DIRECTION_RTL
         val cal = java.util.Calendar.getInstance()
         val today = when (cal.get(java.util.Calendar.DAY_OF_WEEK)) {
-            java.util.Calendar.SUNDAY -> 0
-            java.util.Calendar.MONDAY -> 1
-            java.util.Calendar.TUESDAY -> 2
-            java.util.Calendar.WEDNESDAY -> 3
-            java.util.Calendar.THURSDAY -> 4
-            java.util.Calendar.FRIDAY -> 5
-            java.util.Calendar.SATURDAY -> 6
-            else -> 0
+            java.util.Calendar.SUNDAY -> 0; java.util.Calendar.MONDAY -> 1; java.util.Calendar.TUESDAY -> 2
+            java.util.Calendar.WEDNESDAY -> 3; java.util.Calendar.THURSDAY -> 4; java.util.Calendar.FRIDAY -> 5
+            java.util.Calendar.SATURDAY -> 6; else -> 0
         }
-        val textColor = Color.parseColor("#1A1A2E")
+        
         val cellParams = TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
         
         if (today > 4) {
             val row = TableRow(this)
             val tv = TextView(this).apply {
-                text = "عطلة اليوم"; setTextColor(textColor); gravity = Gravity.CENTER
+                text = "عطلة اليوم"; setTextColor(Color.WHITE); gravity = Gravity.CENTER
                 setPadding(16, 24, 16, 24); textSize = 16f
             }
             row.addView(tv)
@@ -179,19 +175,27 @@ class MainActivity : AppCompatActivity() {
         }
         
         val schedule = prefs.getSchedule()
+        val state = ScheduleCalculator.getCurrentState(prefs)
+        val currentLesson = state.lessonNumber ?: -1
+        
         for (i in 0 until 6) {
             val row = TableRow(this)
-            if (i % 2 == 0) row.setBackgroundColor(Color.parseColor("#20FFFFFF"))
+            val isCurrent = (state.type == PeriodType.LESSON && i + 1 == currentLesson)
+            
+            if (isCurrent) row.setBackgroundColor(Color.parseColor("#80FFFFFF"))
+            else if (i % 2 == 0) row.setBackgroundColor(Color.parseColor("#40FFFFFF"))
+
             val lessonCell = TextView(this).apply {
-                text = "حصة " + (i + 1); setTextColor(textColor); gravity = Gravity.CENTER
-                setPadding(12, 16, 12, 16); textSize = 13f
+                text = "حصة " + (i + 1); setTextColor(Color.WHITE); gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16); textSize = 14f
                 maxLines = 1; ellipsize = TextUtils.TruncateAt.END
             }
             row.addView(lessonCell, cellParams)
+            
             val infoCell = TextView(this).apply {
-                text = if (schedule[today][i].isBlank()) "غير محدد" else schedule[today][i]
-                setTextColor(textColor); gravity = Gravity.CENTER
-                setPadding(12, 16, 12, 16); textSize = 13f
+                text = if (schedule[today][i].isBlank()) "شاغر" else schedule[today][i]
+                setTextColor(Color.WHITE); gravity = Gravity.CENTER
+                setPadding(12, 16, 12, 16); textSize = 14f
                 maxLines = 1; ellipsize = TextUtils.TruncateAt.END
             }
             row.addView(infoCell, cellParams)
