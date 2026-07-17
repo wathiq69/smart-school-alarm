@@ -15,6 +15,11 @@ class ScheduleMonitorService : Service() {
 
     private val alarmPlayer by lazy { SchoolAlarmPlayer.getInstance(this) }
 
+    companion object {
+        const val ACTION_START = "com.wathiq.schoolalarm.action.START"
+        const val ACTION_SPEAK_WELCOME = "com.wathiq.schoolalarm.action.SPEAK_WELCOME"
+    }
+
     override fun onCreate() {
         super.onCreate()
         startForegroundServiceNotification()
@@ -22,12 +27,18 @@ class ScheduleMonitorService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val action = intent?.action
-        if (action == "PLAY_LESSON") {
-            alarmPlayer.playLessonRingtone()
-        } else if (action == "PLAY_BREAK") {
-            alarmPlayer.playBreakRingtone()
-        } else if (action == "STOP_ALARM") {
-            alarmPlayer.stop()
+        when (action) {
+            ACTION_START -> { }
+            ACTION_SPEAK_WELCOME -> { }
+            "PLAY_LESSON" -> {
+                alarmPlayer.playLessonRingtone()
+            }
+            "PLAY_BREAK" -> {
+                alarmPlayer.playBreakRingtone()
+            }
+            "STOP_ALARM" -> {
+                alarmPlayer.stop()
+            }
         }
         return START_STICKY
     }
