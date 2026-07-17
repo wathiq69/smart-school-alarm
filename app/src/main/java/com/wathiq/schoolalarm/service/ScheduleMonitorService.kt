@@ -10,6 +10,8 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import com.wathiq.schoolalarm.App
 import com.wathiq.schoolalarm.R
@@ -31,12 +33,12 @@ class ScheduleMonitorService : Service() {
     private val prefs by lazy { PreferencesManager.getInstance(this) }
     private val tts by lazy { TtsManager.getInstance(this) }
     private val ringtoneMgr by lazy { RingtoneManager.getInstance(this) }
+    private val vibrator by lazy { getSystemService(VIBRATOR_SERVICE) as Vibrator }
     private val handler = Handler(Looper.getMainLooper())
     private var lastState: ScheduleState? = null
     private var lessonEndAlertFired = false
     private var breakEndAlertFired = false
-    private var lessonStartFired = false
-    private var breakStartFired = false
+    private var lessonStartAlertFired = false
 
     private val tickRunnable = object : Runnable {
         override fun run() { checkSchedule(); handler.postDelayed(this, 1000L) }
@@ -64,50 +66,99 @@ class ScheduleMonitorService : Service() {
         val now = System.currentTimeMillis()
         val state = ScheduleCalculator.getCurrentState(prefs, now)
         updateMonitoringNotification(getStatusText(state))
+        
+        if (state.type != lastState?.type) {
+            lessonEndAlertFired = false
+            breakEndAlertFired = false
+            lessonStartAlertFired = false
+        }
+
         when (state.type) {
             PeriodType.LESSON -> {
-                if (!lessonStartFired && lastState?.type != PeriodType.LESSON) {
-                    onLessonStart(state); lessonStartFired = true; breakStartFired = false; lessonEndAlertFired = false
+                if (lastState?.type != PeriodType.LESSON) {
+                    onLessonStart(state)
                 }
                 val alertSec = prefs.lessonEndAlertSec
-                if (!lessonEndAlertFired && state.remainingSeconds <= alertSec && state.remainingSeconds > 0) { onLessonEndAlert(state); lessonEndAlertFired = true }
+                if (!lessonEndAlertFired && state.remainingSeconds <= alertSec && state.remainingSeconds > 0) { 
+                    onLessonEndAlert(state); lessonEndAlertFired = true 
+                }
             }
             PeriodType.BREAK -> {
-                if (!breakStartFired && lastState?.type != PeriodType.BREAK) {
-                    onBreakStart(state); breakStartFired = true; lessonStartFired = false; breakEndAlertFired = false
+                if (lastState?.type != PeriodType.BREAK) {
+                    onBreakStart(state)
                 }
                 val alertSec = prefs.breakEndAlertSec
-                if (!breakEndAlertFired && state.remainingSeconds <= alertSec && state.remainingSeconds > 0) { onBreakEndAlert(state); breakEndAlertFired = true }
+                if (!breakEndAlertFired && state.remainingSeconds <= alertSec && state.remainingSeconds > 0) { 
+                    onBreakEndAlert(state); breakEndAlertFired = true 
+                }
+                
+                val startAlertSec = prefs.lessonStartAlertSec
+                if (!lessonStartAlertFired && state.remainingSeconds <= startAlertSec && state.remainingSeconds > 0) {
+                    onLessonStartAlert(state); lessonStartAlertFired = true
+                }
             }
             else -> {}
         }
         lastState = state
     }
 
+    private fun vibrate() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(500)
+        }
+    }
+
     private fun onLessonStart(state: ScheduleState) {
         val lessonNum = state.lessonNumber ?: return
         val lessonInfo = prefs.getLessonForToday(lessonNum - 1)
-        ringtoneMgr.playLessonRingtone()
+        if (!prefs.muted) ringtoneMgr.playLessonRingtone()
+        vibrate()
         val msg = if (lessonInfo.isNotBlank()) "بدأت الحصة " + lessonNum + ". لديك درس " + lessonInfo else "بدأت الحصة " + lessonNum
         speakAndAlert(msg, "بداية الحصة " + lessonNum, NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onLessonEndAlert(state: ScheduleState) {
         val sec = prefs.lessonEndAlertSec
-        ringtoneMgr.playLessonRingtone()
+        if (!prefs.muted) ringtoneMgr.playLessonRingtone()
+        vibrate()
         speakAndAlert("درسك سينتهي بعد " + sec + " ثانية", "تنبيه: نهاية الحصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakStart(state: ScheduleState) {
         val lessonNum = state.lessonNumber ?: return
-        ringtoneMgr.playBreakRingtone()
-        speakAndAlert("انتهت الحصة " + lessonNum + ". بدأت الفرصة", "بداية الفرصة", NotificationManager.IMPORTANCE_HIGH)
+        if (!prefs.muted) ringtoneMgr.playBreakRingtone()
+        vibrate()
+        
+        val nextLessonNum = lessonNum + 1
+        val nextLessonInfo = prefs.getLessonForToday(nextLessonNum - 1)
+        val msg = if (nextLessonInfo.isNotBlank()) {
+            "انتهت الحصة " + lessonNum + ". بدأت الفرصة. في الدرس القادم لديك درس " + nextLessonInfo
+        } else {
+            "انتهت الحصة " + lessonNum + ". بدأت الفرصة. ليس لديك درس قادم عندك شاغر"
+        }
+        speakAndAlert(msg, "بداية الفرصة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     private fun onBreakEndAlert(state: ScheduleState) {
         val sec = prefs.breakEndAlertSec
-        ringtoneMgr.playBreakRingtone()
+        if (!prefs.muted) ringtoneMgr.playBreakRingtone()
+        vibrate()
         speakAndAlert("الفرصة ستنتهي بعد " + sec + " ثانية, استعد للدرس", "تنبيه: نهاية الفرصة", NotificationManager.IMPORTANCE_HIGH)
+    }
+
+    private fun onLessonStartAlert(state: ScheduleState) {
+        val nextLessonNum = (state.lessonNumber ?: 0) + 1
+        val nextLessonInfo = prefs.getLessonForToday(nextLessonNum - 1)
+        if (!prefs.muted) ringtoneMgr.playLessonRingtone()
+        vibrate()
+        val msg = if (nextLessonInfo.isNotBlank()) {
+            "استعد, ستبدأ الحصة " + nextLessonNum + " خلال دقيقة. لديك درس " + nextLessonInfo
+        } else {
+            "استعد, ستبدأ الحصة " + nextLessonNum + " خلال دقيقة"
+        }
+        speakAndAlert(msg, "تنبيه: بداية الحصة القادمة", NotificationManager.IMPORTANCE_HIGH)
     }
 
     fun speakWelcomeMessage() {
@@ -119,19 +170,9 @@ class ScheduleMonitorService : Service() {
         val m = cal.get(java.util.Calendar.MINUTE)
         val amPm = if (cal.get(java.util.Calendar.AM_PM) == java.util.Calendar.AM) "صباحا" else "مساء"
         val hourStr = when (h12) {
-            1 -> "الواحدة"
-            2 -> "الثانية"
-            3 -> "الثالثة"
-            4 -> "الرابعة"
-            5 -> "الخامسة"
-            6 -> "السادسة"
-            7 -> "السابعة"
-            8 -> "الثامنة"
-            9 -> "التاسعة"
-            10 -> "العاشرة"
-            11 -> "الحادية عشرة"
-            12 -> "الثانية عشرة"
-            else -> h12.toString()
+            1 -> "الواحدة"; 2 -> "الثانية"; 3 -> "الثالثة"; 4 -> "الرابعة"; 5 -> "الخامسة"
+            6 -> "السادسة"; 7 -> "السابعة"; 8 -> "الثامنة"; 9 -> "التاسعة"; 10 -> "العاشرة"
+            11 -> "الحادية عشرة"; 12 -> "الثانية عشرة"; else -> h12.toString()
         }
         val baseMsg = "السلام عليكم استاذ " + owner + ", الساعة الآن هي " + hourStr + " " + amPm + " و " + m + " دقيقة"
         val fullMsg = when (state.type) {
@@ -150,7 +191,7 @@ class ScheduleMonitorService : Service() {
     }
 
     private fun speakAndAlert(text: String, title: String, importance: Int) {
-        if (prefs.monitoringEnabled) tts.speakNow(text)
+        if (prefs.monitoringEnabled && !prefs.muted) tts.speakNow(text)
         showAlertNotification(text, title, importance)
     }
 
