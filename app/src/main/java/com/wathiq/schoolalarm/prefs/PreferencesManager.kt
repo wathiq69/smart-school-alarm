@@ -17,15 +17,15 @@ class PreferencesManager private constructor(context: Context) {
         private const val KEY_LESSON_COUNT = "lesson_count"
         private const val KEY_LESSON_END_ALERT_SEC = "lesson_end_alert_sec"
         private const val KEY_BREAK_END_ALERT_SEC = "break_end_alert_sec"
+        private const val KEY_LESSON_START_ALERT_SEC = "lesson_start_alert_sec"
         private const val KEY_LESSON_RINGTONE = "lesson_ringtone"
         private const val KEY_BREAK_RINGTONE = "break_ringtone"
-        private const val KEY_CUSTOM_LESSON_RINGTONE = "custom_lesson_ringtone"
-        private const val KEY_CUSTOM_BREAK_RINGTONE = "custom_break_ringtone"
         private const val KEY_SCHEDULE = "schedule"
         private const val KEY_WORKDAYS = "workdays"
         private const val KEY_HOLIDAYS = "holidays"
         private const val KEY_PAUSE_TODAY = "pause_today"
         private const val KEY_MONITORING_ENABLED = "monitoring_enabled"
+        private const val KEY_MUTED = "muted"
 
         @Volatile private var instance: PreferencesManager? = null
         fun getInstance(context: Context): PreferencesManager {
@@ -67,6 +67,10 @@ class PreferencesManager private constructor(context: Context) {
         get() = prefs.getInt(KEY_BREAK_END_ALERT_SEC, 30)
         set(value) = prefs.edit().putInt(KEY_BREAK_END_ALERT_SEC, value).apply()
 
+    var lessonStartAlertSec: Int
+        get() = prefs.getInt(KEY_LESSON_START_ALERT_SEC, 60)
+        set(value) = prefs.edit().putInt(KEY_LESSON_START_ALERT_SEC, value).apply()
+
     var lessonRingtone: String
         get() = prefs.getString(KEY_LESSON_RINGTONE, "alarm") ?: "alarm"
         set(value) = prefs.edit().putString(KEY_LESSON_RINGTONE, value).apply()
@@ -75,13 +79,9 @@ class PreferencesManager private constructor(context: Context) {
         get() = prefs.getString(KEY_BREAK_RINGTONE, "bell") ?: "bell"
         set(value) = prefs.edit().putString(KEY_BREAK_RINGTONE, value).apply()
 
-    var customLessonRingtone: String
-        get() = prefs.getString(KEY_CUSTOM_LESSON_RINGTONE, "") ?: ""
-        set(value) = prefs.edit().putString(KEY_CUSTOM_LESSON_RINGTONE, value).apply()
-
-    var customBreakRingtone: String
-        get() = prefs.getString(KEY_CUSTOM_BREAK_RINGTONE, "") ?: ""
-        set(value) = prefs.edit().putString(KEY_CUSTOM_BREAK_RINGTONE, value).apply()
+    var muted: Boolean
+        get() = prefs.getBoolean(KEY_MUTED, false)
+        set(value) = prefs.edit().putBoolean(KEY_MUTED, value).apply()
 
     fun getSchedule(): Array<Array<String>> {
         val json = prefs.getString(KEY_SCHEDULE, null) ?: return Array(5) { Array(6) { "" } }
