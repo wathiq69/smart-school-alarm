@@ -9,15 +9,12 @@ import android.net.Uri
 import android.util.Log
 import com.wathiq.schoolalarm.prefs.PreferencesManager
 
-class SchoolAlarmPlayer private constructor(private val context: Context) {
-    
+class RingtoneManager private constructor(private val context: Context) {
     companion object {
-        @Volatile 
-        private var instance: SchoolAlarmPlayer? = null
-        
-        fun getInstance(context: Context): SchoolAlarmPlayer {
+        @Volatile private var instance: RingtoneManager? = null
+        fun getInstance(context: Context): RingtoneManager {
             return instance ?: synchronized(this) {
-                instance ?: SchoolAlarmPlayer(context.applicationContext).also { instance = it }
+                instance ?: RingtoneManager(context.applicationContext).also { instance = it }
             }
         }
 
@@ -57,30 +54,20 @@ class SchoolAlarmPlayer private constructor(private val context: Context) {
     fun getSystemRingtones(): List<Pair<String, String>> {
         val result = mutableListOf<Pair<String, String>>()
         try {
-            // استخدام كلاس أندرويد الرسمي هنا بشكل صريح لمنع التضارب
             val mgr = android.media.RingtoneManager(context)
             mgr.setType(android.media.RingtoneManager.TYPE_ALARM)
             val cursor = mgr.cursor
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    val title = cursor.getString(android.media.RingtoneManager.TITLE_COLUMN_INDEX)
-                    val uri = mgr.getRingtoneUri(cursor.position).toString()
-                    result.add("system_" + uri to title)
-                }
+            while (cursor.moveToNext()) {
+                val title = cursor.getString(android.media.RingtoneManager.TITLE_COLUMN_INDEX)
+                val uri = mgr.getRingtoneUri(cursor.position).toString()
+                result.add("system_" + uri to title)
             }
-        } catch (e: Exception) {
-            Log.e("SchoolAlarmPlayer", "Error fetching system ringtones: ${e.message}")
-        }
+        } catch (e: Exception) {}
         return result
     }
 
-    fun previewGenerated(type: String) { 
-        playGenerated(type) 
-    }
-    
-    fun previewSystem(uriStr: String) { 
-        playSystemRingtone(Uri.parse(uriStr)) 
-    }
+    fun previewGenerated(type: String) { playGenerated(type) }
+    fun previewSystem(uriStr: String) { playSystemRingtone(Uri.parse(uriStr)) }
 
     private fun playGenerated(type: String) {
         stop()
@@ -122,24 +109,14 @@ class SchoolAlarmPlayer private constructor(private val context: Context) {
                     else if (i > n - fade) v *= (n - i).toDouble() / fade
                     buf[i] = (v * Short.MAX_VALUE * 0.8).toInt().toShort()
                 }
-                
                 audioTrack = AudioTrack(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .build(),
-                    AudioFormat.Builder()
-                        .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
-                        .setSampleRate(sr)
-                        .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
-                        .build(),
+                    AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build(),
+                    AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(sr).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build(),
                     buf.size * 2, AudioTrack.MODE_STATIC, 0
                 )
                 audioTrack?.write(buf, 0, buf.size)
                 audioTrack?.play()
-            } catch (e: Exception) { 
-                Log.e("SchoolAlarmPlayer", "gen error: " + e.message) 
-            }
+            } catch (e: Exception) { Log.e("RingtoneMgr", "gen error: " + e.message) }
         }.start()
     }
 
@@ -147,26 +124,16 @@ class SchoolAlarmPlayer private constructor(private val context: Context) {
         stop()
         try {
             ringtone = android.media.RingtoneManager.getRingtone(context, uri)
-            ringtone?.audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+            ringtone?.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build()
             ringtone?.play()
-        } catch (e: Exception) { 
-            Log.e("SchoolAlarmPlayer", "sys error: " + e.message) 
-        }
+        } catch (e: Exception) { Log.e("RingtoneMgr", "sys error: " + e.message) }
     }
 
     fun stop() {
         isPlaying = false
-        try { 
-            audioTrack?.stop()
-            audioTrack?.release() 
-        } catch (_: Exception) {}
+        try { audioTrack?.stop(); audioTrack?.release() } catch (_: Exception) {}
         audioTrack = null
-        try { 
-            ringtone?.stop() 
-        } catch (_: Exception) {}
+        try { ringtone?.stop() } catch (_: Exception) {}
         ringtone = null
     }
 }
