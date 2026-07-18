@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿package com.wathiq.schoolalarm.util
 
 import android.content.Context
@@ -60,6 +61,35 @@ class RingtoneManager private constructor(private val context: Context) {
     private fun playSystem(uri: Uri) {
         stop()
         try { ringtone = android.media.RingtoneManager.getRingtone(context, uri); ringtone?.audioAttributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build(); ringtone?.play() } catch (e: Exception) {}
+=======
+package com.wathiq.schoolalarm.service
+
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
+
+class ScheduleMonitorService : Service() {
+
+    // إذا كان كلاس SchoolAlarmPlayer في مجلد آخر، قم بتغيير المسار المكتوب أدناه (com.wathiq.schoolalarm...) ليطابق حزمته الحقيقية.
+    private val schoolAlarmPlayer: com.wathiq.schoolalarm.media.SchoolAlarmPlayer by lazy {
+        com.wathiq.schoolalarm.media.SchoolAlarmPlayer(applicationContext)
+    }
+
+    override fun onBind(intent: Intent?): IBinder? {
+        return null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        return START_STICKY
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+>>>>>>> 56d264d069fb6ff38e7f52c2eb630c3ef8e7dad7
     }
     fun stop() { isPlaying = false; try { audioTrack?.stop(); audioTrack?.release() } catch (_: Exception) {}; audioTrack = null; try { ringtone?.stop() } catch (_: Exception) {}; ringtone = null }
 }

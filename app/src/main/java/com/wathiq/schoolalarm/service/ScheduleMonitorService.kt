@@ -1,30 +1,28 @@
 ﻿package com.wathiq.schoolalarm.service
 
 import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
+import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
+<<<<<<< HEAD
 import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
+=======
+>>>>>>> 56d264d069fb6ff38e7f52c2eb630c3ef8e7dad7
 import androidx.core.app.NotificationCompat
-import com.wathiq.schoolalarm.App
-import com.wathiq.schoolalarm.R
-import com.wathiq.schoolalarm.prefs.PreferencesManager
-import com.wathiq.schoolalarm.tts.TtsManager
-import com.wathiq.schoolalarm.ui.MainActivity
-import com.wathiq.schoolalarm.util.PeriodType
-import com.wathiq.schoolalarm.util.RingtoneManager
-import com.wathiq.schoolalarm.util.ScheduleCalculator
-import com.wathiq.schoolalarm.util.ScheduleState
+import com.wathiq.schoolalarm.util.SchoolAlarmPlayer
 
 class ScheduleMonitorService : Service() {
+
+    private val alarmPlayer by lazy { SchoolAlarmPlayer.getInstance(this) }
+
     companion object {
+<<<<<<< HEAD
         private const val NOTIF_ID = 2001
         const val ACTION_START = "com.wathiq.schoolalarm.START"
         const val ACTION_STOP = "com.wathiq.schoolalarm.STOP"
@@ -43,11 +41,33 @@ class ScheduleMonitorService : Service() {
     private val tickRunnable = object : Runnable { override fun run() { checkSchedule(); handler.postDelayed(this, 1000L) } }
 
     override fun onCreate() { super.onCreate(); tts }
+=======
+        const val ACTION_START = "com.wathiq.schoolalarm.action.START"
+        const val ACTION_SPEAK_WELCOME = "com.wathiq.schoolalarm.action.SPEAK_WELCOME"
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        startForegroundServiceNotification()
+    }
+
+>>>>>>> 56d264d069fb6ff38e7f52c2eb630c3ef8e7dad7
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        when (intent?.action) {
-            ACTION_STOP -> { stopMonitoring(); return START_NOT_STICKY }
-            ACTION_SPEAK_WELCOME -> speakWelcomeMessage()
+        val action = intent?.action
+        when (action) {
+            ACTION_START -> { }
+            ACTION_SPEAK_WELCOME -> { }
+            "PLAY_LESSON" -> {
+                alarmPlayer.playLessonRingtone()
+            }
+            "PLAY_BREAK" -> {
+                alarmPlayer.playBreakRingtone()
+            }
+            "STOP_ALARM" -> {
+                alarmPlayer.stop()
+            }
         }
+<<<<<<< HEAD
         startForegroundWithNotification(); handler.post(tickRunnable); return START_STICKY
     }
 
@@ -75,10 +95,33 @@ class ScheduleMonitorService : Service() {
                 if (!lessonStartAlertFired && state.remainingSeconds <= ss && state.remainingSeconds > 0) { onLessonStartAlert(state); lessonStartAlertFired = true }
             }
             else -> {}
-        }
-        lastState = state
+=======
+        return START_STICKY
     }
 
+    private fun startForegroundServiceNotification() {
+        val channelId = "school_alarm_monitor"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "School Alarm Monitor",
+                NotificationManager.IMPORTANCE_LOW
+            )
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+>>>>>>> 56d264d069fb6ff38e7f52c2eb630c3ef8e7dad7
+        }
+
+        val notification: Notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle("الجرس المدرسي الذكي")
+            .setContentText("خدمة مراقبة الجدول تعمل في الخلفية...")
+            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
+            .build()
+
+        startForeground(1, notification)
+    }
+
+<<<<<<< HEAD
     private fun vibrate() { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)) else vibrator.vibrate(500) }
 
     private fun onLessonStart(state: ScheduleState) {
@@ -153,5 +196,12 @@ class ScheduleMonitorService : Service() {
     private fun updateMonitoringNotification(text: String) { getSystemService(NotificationManager::class.java).notify(NOTIF_ID, buildMonitoringNotification(text)) }
     private fun stopMonitoring() { handler.removeCallbacks(tickRunnable); stopForeground(STOP_FOREGROUND_REMOVE); stopSelf() }
     override fun onDestroy() { handler.removeCallbacks(tickRunnable); ringtoneMgr.stop(); super.onDestroy() }
+=======
+>>>>>>> 56d264d069fb6ff38e7f52c2eb630c3ef8e7dad7
     override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onDestroy() {
+        alarmPlayer.stop()
+        super.onDestroy()
+    }
 }

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_cool_gradient"
     android:fitsSystemWindows="true">
 
-    <!-- Header (أزرق متدرج) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="20dp"
         android:gravity="center">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +20,6 @@
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,10 +28,8 @@
             android:textSize="14sp"
             android:textStyle="bold|italic"
             android:layout_marginTop="6dp" />
-
     </LinearLayout>
 
-    <!-- المحتوى الرئيسي -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -41,130 +37,140 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- بطاقة الساعة (بيضاء بحدود) -->
-            <LinearLayout
+            <!-- بطاقة الساعة (برتقالية) -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:gravity="center"
-                android:layout_marginBottom="12dp"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/tvClock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    android:textColor="#0D47A1"
-                    android:textSize="48sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp" />
-
-            </LinearLayout>
-
-            <!-- بطاقة الحالة (بيضاء) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:gravity="center"
-                android:layout_marginBottom="12dp"
-                android:padding="24dp">
-
-                <TextView
-                    android:id="@+id/tvStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="جاري التحميل..."
-                    android:textColor="#0D47A1"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvRemaining"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--:--"
-                    android:textColor="#E65100"
-                    android:textSize="36sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp" />
-
-                <TextView
-                    android:id="@+id/tvRemainingLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/remaining_label"
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp" />
-
-                <TextView
-                    android:id="@+id/tvLessonInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#1A237E"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <!-- بطاقة جدول اليوم (بيضاء) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-                android:layout_marginBottom="12dp"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="جدول اليوم"
-                    android:textColor="#0D47A1"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="8dp" />
-
-                <HorizontalScrollView
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#FF9800"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TableLayout
-                        android:id="@+id/todayScheduleTable"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp">
+                    <TextClock
+                        android:id="@+id/tvClock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:stretchColumns="*" />
+                        android:format12Hour="hh:mm:ss a"
+                        android:format24Hour="hh:mm:ss a"
+                        android:textColor="#FFFFFF"
+                        android:textSize="42sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                    <TextClock
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:format12Hour="EEEE, dd MMMM yyyy"
+                        android:format24Hour="EEEE, dd MMMM yyyy"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginTop="8dp"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                </HorizontalScrollView>
+            <!-- بطاقة الحالة (صفراء) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#FFC107"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp">
+                    <TextView
+                        android:id="@+id/tvStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="جاري التحميل..."
+                        android:textColor="#1A237E"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
+                    <TextView
+                        android:id="@+id/tvRemaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--:--"
+                        android:textColor="#1A237E"
+                        android:textSize="36sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+                    <TextView
+                        android:id="@+id/tvRemainingLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/remaining_label"
+                        android:textColor="#1A237E"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp" />
+                    <TextView
+                        android:id="@+id/tvLessonInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#1A237E"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="8dp"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            </LinearLayout>
-
+            <!-- بطاقة جدول اليوم (خضراء) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#4CAF50"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="جدول اليوم"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TableLayout
+                            android:id="@+id/todayScheduleTable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="*" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-
     </ScrollView>
 
-    <!-- شريط سفلي (أبيض) -->
+    <!-- شريط سفلي -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -180,23 +186,23 @@
             android:layout_weight="1"
             android:text="@string/btn_schedule"
             android:textColor="#0D47A1"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:background="?android:attr/selectableItemBackground"
             android:drawableTop="@android:drawable/ic_menu_agenda"
             android:layout_marginEnd="4dp" />
 
         <Button
-            android:id="@+id/btnTestSound"
+            android:id="@+id/btnMute"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_test_sound"
+            android:text="كتم"
             android:textColor="#0D47A1"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableTop="@android:drawable/ic_media_play"
+            android:drawableTop="@android:drawable/ic_lock_silent_mode_off"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp" />
 
@@ -205,9 +211,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/btn_pause_today"
+            android:text="عطلة اليوم"
             android:textColor="#0D47A1"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:background="?android:attr/selectableItemBackground"
             android:drawableTop="@android:drawable/ic_media_pause"
@@ -220,7 +226,5 @@
             android:background="?android:attr/selectableItemBackground"
             android:src="@android:drawable/ic_menu_preferences"
             android:layout_marginStart="4dp" />
-
     </LinearLayout>
-
 </LinearLayout>

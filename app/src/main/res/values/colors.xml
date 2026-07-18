@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_cool_start">#1565C0</color>
-    <color name="bg_cool_center">#1976D2</color>
-    <color name="bg_cool_end">#0D47A1</color>
+    <color name="bg_cool_start">#E3F2FD</color>
+    <color name="bg_cool_center">#BBDEFB</color>
+    <color name="bg_cool_end">#90CAF9</color>
     
     <color name="glass_background">#80FFFFFF</color>
     <color name="glass_border">#B3FFFFFF</color>
@@ -32,8 +32,8 @@
     <color name="bottom_bar_icon">#1565C0</color>
     <color name="bottom_bar_text">#1565C0</color>
     
-    <color name="neon_blue">#00E5FF</color>
-    <color name="neon_green">#39FF14</color>
+    <color name="neon_blue">#0066CC</color>
+    <color name="neon_green">#008000</color>
     <color name="neon_orange">#FF6600</color>
     <color name="button_text">#FFFFFF</color>
 </resources>
