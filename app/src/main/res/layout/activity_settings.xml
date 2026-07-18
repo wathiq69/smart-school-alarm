@@ -37,14 +37,14 @@
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
-        <!-- Owner Name -->
+        <!-- Owner Name (أزرق) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#1565C0"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -55,14 +55,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="الاسم"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvOwnerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -73,14 +73,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- School Start -->
+        <!-- School Start (برتقالي) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#FF9800"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -91,14 +91,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="بداية الدوام"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvSchoolStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -109,14 +109,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Lesson Duration -->
+        <!-- Lesson Duration (أصفر) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#FFC107"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="طول الحصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#1A237E"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
@@ -145,14 +145,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Break Duration -->
+        <!-- Break Duration (أخضر) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#4CAF50"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -163,14 +163,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="طول الفرصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvBreakDuration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -181,14 +181,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Lesson Count -->
+        <!-- Lesson Count (أزرق) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#1565C0"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -199,14 +199,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="عدد الحصص"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvLessonCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -217,14 +217,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Lesson Alert -->
+        <!-- Lesson Alert (برتقالي) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#FF9800"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -235,14 +235,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="تنبيه نهاية الحصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvLessonAlertSec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -253,14 +253,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Break Alert -->
+        <!-- Break Alert (أصفر) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#FFC107"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -271,7 +271,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="تنبيه نهاية الفرصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#1A237E"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
@@ -289,14 +289,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Lesson Ringtone -->
+        <!-- Lesson Ringtone (أخضر) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#4CAF50"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -307,14 +307,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="نغمة الحصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvLessonRingtone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -325,14 +325,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Break Ringtone -->
+        <!-- Break Ringtone (أزرق) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#1565C0"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -343,14 +343,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="نغمة الفرصة"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvBreakRingtone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -361,14 +361,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Workdays -->
+        <!-- Workdays (برتقالي) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF"
+            android:background="#FF9800"
             android:layout_marginBottom="10dp">
             <LinearLayout
                 android:layout_width="0dp"
@@ -379,14 +379,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="أيام العمل"
-                    android:textColor="#0D47A1"
+                    android:textColor="#FFFFFF"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/tvWorkdays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#1A237E"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp" />
             </LinearLayout>
             <Button
@@ -397,14 +397,14 @@
                 style="@style/Button3D" />
         </LinearLayout>
 
-        <!-- Holidays -->
+        <!-- Holidays (أصفر) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:background="#FFFFFF">
+            android:background="#FFC107">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -414,7 +414,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="الأعياد والعطل"
-                    android:textColor="#0D47A1"
+                    android:textColor="#1A237E"
                     android:textSize="14sp"
                     android:textStyle="bold" />
                 <TextView
